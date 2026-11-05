@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-2 · Canvas 电商系统架构图 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lab18.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <span class="eyebrow">实验 18 · 2 · CANVAS</span>
+    <h1>电商系统架构图</h1>
+    <p class="page-sub">
+      全部图形由 Canvas 2D 绘制：五层架构（用户层 / 接入层 / 业务层 / 支撑层 / 数据层）、
+      圆角卡片节点、虚线调用链路与沿链路流动的请求光点。悬停节点可查看职责说明。
+    </p>
+  </header>
+
+  <main class="stage-card">
+    <div class="stage-card__head">
+      <div>
+        <h2>全站系统架构 · 电商</h2>
+        <p>逻辑坐标 1000 × 660，随容器等比缩放，移动端自动压缩行高与字号。</p>
+      </div>
+      <div class="tools">
+        <span class="meter">5 层 · <b>19</b> 个节点</span>
+      </div>
+    </div>
+
+    <div class="canvas-shell arch" id="shell">
+      <canvas id="scene" aria-label="基于 Canvas 绘制的电商系统五层架构图"></canvas>
+      <div class="canvas-tip" id="tip" hidden></div>
+    </div>
+
+    <div class="hint-row">
+      <span><b>实线箭头</b> 为调用链路，虚线流动光点表示请求方向</span>
+      <span><b>悬停节点</b> 高亮并显示职责说明</span>
+      <span>窗口缩放时整图自动重排</span>
+    </div>
+
+    <div class="spec-strip">
+      <div class="spec-item">
+        <h4>用户层</h4>
+        <p>App、小程序、Web 三端接入，统一由后端接口提供商品、订单与支付能力。</p>
+      </div>
+      <div class="spec-item">
+        <h4>接入 / 业务层</h4>
+        <p>API 网关负责鉴权、限流与路由；业务微服务按商品、订单、购物车、支付、会员拆分。</p>
+      </div>
+      <div class="spec-item">
+        <h4>支撑 / 数据层</h4>
+        <p>消息队列异步解耦，Redis 承担热点缓存，MySQL 主从与对象存储承载业务数据。</p>
+      </div>
+    </div>
+  </main>
+
+  <nav class="lab-nav" aria-label="实验 18 页面导航">
+    <a href="18-1.html">18-1 Canvas 文字动画</a>
+    <a class="is-current" href="18-2.html">18-2 Canvas 电商架构图</a>
+    <a href="18-3.html">18-3 SVG 智能客服架构</a>
+    <a href="18-4.html">18-4 ECharts 图表</a>
+    <a href="18-6.html">18-6 Mermaid 图</a>
+    <a href="18-7.html">18-7 Three.js 图表</a>
+    <a href="18-8.html">18-8 数据大屏</a>
+  </nav>
+
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('scene');
+  var shell = document.getElementById('shell');
+  var tip = document.getElementById('tip');
+  var ctx = canvas.getContext('2d');
+
+  var LW = 1000;
+  var LH = 660;
+  var FONT = '"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif';
+  var M = { left: 24, right: 24 };
+  var LABEL_W = 88;
+  var CONTENT_X = M.left + LABEL_W;
+  var CONTENT_W = LW - M.left - M.right - LABEL_W;
+
+  var LAYERS = [
+    {
+      name: '用户层', en: 'CLIENT', color: '#2f6b4f', y: 24, h: 78,
+      nodes: [
+        { t: '移动端 App', s: 'iOS / Android', d: '原生 App 提供商品浏览、下单、支付与售后入口。' },
+        { t: '微信小程序', s: '即用即走', d: '借助微信生态完成分享、拼团与快速下单。' },
+        { t: 'Web 商城', s: 'PC / H5', d: '浏览器端商城，兼顾搜索导购与大屏浏览体验。' }
+      ]
+    },
+    {
+      name: '接入层', en: 'ACCESS', color: '#3f7f6a', y: 132, h: 78,
+      nodes: [
+        { t: 'API 网关', s: '鉴权 · 限流 · 路由', d: '统一入口，负责鉴权、限流、灰度路由与协议转换。' },
+        { t: '负载均衡', s: 'Nginx / LVS', d: '按权重分发流量，健康检查与故障节点摘除。' },
+        { t: 'CDN 加速', s: '静态资源分发', d: '图片、脚本等静态资源就近分发，降低源站压力。' }
+      ]
+    },
+    {
+      name: '业务层', en: 'DOMAIN', color: '#c8893f', y: 240, h: 100,
+      nodes: [
+        { t: '商品服务', s: 'SKU · 库存', d: '维护商品档案、SKU 规格、价格与库存扣减。' },
+        { t: '订单服务', s: '下单 · 履约', d: '负责下单、拆单、状态机流转与履约跟踪。' },
+        { t: '购物车', s: '暂存 · 合并', d: '购物车暂存、跨端合并与优惠试算。' },
+        { t: '支付服务', s: '支付 · 退款', d: '对接多渠道支付，处理回调、对账与退款。' },
+        { t: '会员中心', s: '积分 · 等级', d: '会员等级、积分、优惠券与用户画像。' }
+      ]
+    },
+    {
+      name: '支撑层', en: 'MIDDLEWARE', color: '#54758c', y: 370, h: 86,
+      nodes: [
+        { t: '消息队列', s: 'Kafka · 异步解耦', d: '订单、库存等事件异步投递，削峰与最终一致。' },
+        { t: '缓存服务', s: 'Redis · 热点数据', d: '热点商品、库存与会话缓存，降低数据库压力。' },
+        { t: '搜索服务', s: 'ES · 商品检索', d: '基于倒排索引的搜索、筛选、排序与关键词联想。' },
+        { t: '任务调度', s: '定时 · 对账', d: '定时任务、支付对账与超时订单关单。' }
+      ]
+    },
+    {
+      name: '数据层', en: 'STORAGE', color: '#6d7a4f', y: 486, h: 86,
+      nodes: [
+        { t: 'MySQL 集群', s: '主从 · 分库分表', d: '交易数据主库，读写分离与分库分表扩展。' },
+        { t: '对象存储', s: '商品图片 / 视频', d: '存储商品图、详情视频与售后凭证等非结构化数据。' },
+        { t: '数据仓库', s: '离线 · 报表', d: '沉淀订单与行为数据，支撑经营分析与报表。' },
+        { t: '日志监控', s: 'ELK · 告警', d: '集中采集日志，链路追踪、指标监控与告警。' }
+      ]
+    }
+  ];
+
+  var boxes = [];
+  var hovered = null;
+  var dpr = 1;
+  var scale = 1;
+  var offX = 0;
+  var offY = 0;
+  var cssW = 0;
+  var cssH = 0;
+
+  /* ---------- 布局：把每个节点换算成绘制矩形 ---------- */
+  function layout() {
+    boxes = [];
+    for (var i = 0; i < LAYERS.length; i++) {
+      var layer = LAYERS[i];
+      var n = layer.nodes.length;
+      var gap = 14;
+      var pad = 10;
+      var w = (CONTENT_W - pad * 2 - gap * (n - 1)) / n;
+
+      for (var j = 0; j < n; j++) {
+        var node = layer.nodes[j];
+        node.x = CONTENT_X + pad + j * (w + gap);
+        node.y = layer.y + 14;
+        node.w = w;
+        node.h = layer.h - 28;
+        node.color = layer.color;
+        boxes.push(node);
+      }
+    }
+  }
+
+  /* ---------- 绘制工具 ---------- */
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawBackground() {
+    ctx.fillStyle = '#f8faf5';
+    ctx.fillRect(0, 0, LW, LH);
+
+    ctx.strokeStyle = 'rgba(29, 42, 35, 0.05)';
+    ctx.lineWidth = 1;
+    for (var x = 0; x <= LW; x += 40) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, LH);
+      ctx.stroke();
+    }
+    for (var y = 0; y <= LH; y += 40) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(LW, y);
+      ctx.stroke();
+    }
+  }
+
+  function drawLayer(layer) {
+    // 层底色
+    ctx.fillStyle = 'rgba(47, 107, 79, 0.045)';
+    roundRect(M.left, layer.y, LW - M.left - M.right, layer.h, 14);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(47, 107, 79, 0.10)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // 左侧层名
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = layer.color;
+    ctx.font = '700 14px ' + FONT;
+    ctx.fillText(layer.name, M.left + 12, layer.y + layer.h / 2 - 8);
+    ctx.fillStyle = 'rgba(29, 42, 35, 0.38)';
+    ctx.font = '600 9px ' + FONT;
+    ctx.fillText(layer.en, M.left + 12, layer.y + layer.h / 2 + 12);
+  }
+
+  function drawNode(node) {
+    var isHover = hovered === node;
+
+    ctx.save();
+    ctx.shadowColor = isHover ? 'rgba(47, 107, 79, 0.30)' : 'rgba(29, 42, 35, 0.10)';
+    ctx.shadowBlur = isHover ? 18 : 10;
+    ctx.shadowOffsetY = 4;
+    ctx.fillStyle = '#ffffff';
+    roundRect(node.x, node.y, node.w, node.h, 10);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.strokeStyle = isHover ? 'rgba(47, 107, 79, 0.7)' : 'rgba(29, 42, 35, 0.10)';
+    ctx.lineWidth = isHover ? 1.6 : 1;
+    roundRect(node.x, node.y, node.w, node.h, 10);
+    ctx.stroke();
+
+    // 左侧色条
+    ctx.fillStyle = node.color;
+    roundRect(node.x + 12, node.y + node.h / 2 - 9, 3, 18, 2);
+    ctx.fill();
+
+    var tx = node.x + 24;
+    var maxW = node.w - 34;
+
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#1d2a23';
+    ctx.font = '700 13px ' + FONT;
+    ctx.fillText(node.t, tx, node.y + node.h / 2 - 9, maxW);
+
+    ctx.fillStyle = 'rgba(29, 42, 35, 0.52)';
+    ctx.font = '500 10.5px ' + FONT;
+    ctx.fillText(node.s, tx, node.y + node.h / 2 + 9, maxW);
+  }
+
+  function drawArrows(t) {
+    var positions = [0.2, 0.5, 0.8];
+    for (var i = 0; i < LAYERS.length - 1; i++) {
+      var from = LAYERS[i];
+      var to = LAYERS[i + 1];
+      var y1 = from.y + from.h + 2;
+      var y2 = to.y - 5;
+      var span = y2 - y1;
+
+      for (var k = 0; k < positions.length; k++) {
+        var x = CONTENT_X + CONTENT_W * positions[k];
+
+        // 虚线
+        ctx.strokeStyle = 'rgba(47, 107, 79, 0.35)';
+        ctx.lineWidth = 1.3;
+        ctx.setLineDash([5, 5]);
+        ctx.lineDashOffset = -(t * 12) % 10;
+        ctx.beginPath();
+        ctx.moveTo(x, y1);
+        ctx.lineTo(x, y2 - 5);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 箭头
+        ctx.fillStyle = 'rgba(47, 107, 79, 0.55)';
+        ctx.beginPath();
+        ctx.moveTo(x - 4, y2 - 6);
+        ctx.lineTo(x + 4, y2 - 6);
+        ctx.lineTo(x, y2 + 1);
+        ctx.closePath();
+        ctx.fill();
+
+        // 流动光点
+        for (var d = 0; d < 2; d++) {
+          var prog = ((t * 0.45 + d * 0.5 + i * 0.18) % 1);
+          var y = y1 + span * prog;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.3, 0, Math.PI * 2);
+          ctx.fillStyle = to.color;
+          ctx.globalAlpha = 0.25 + 0.55 * Math.sin(prog * Math.PI);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+  }
+
+  function drawFooter() {
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(29, 42, 35, 0.4)';
+    ctx.font = '500 11px ' + FONT;
+    ctx.fillText('纵向虚线箭头：调用链路　·　流动光点：请求方向　·　悬停节点查看职责', M.left, 614);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(29, 42, 35, 0.32)';
+    ctx.fillText('电商系统架构图 · Canvas 2D', LW - M.right, 614);
+  }
+
+  function render(t) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, offX * dpr, offY * dpr);
+    drawBackground();
+
+    for (var i = 0; i < LAYERS.length; i++) {
+      drawLayer(LAYERS[i]);
+    }
+
+    drawArrows(t);
+
+    for (var j = 0; j < boxes.length; j++) {
+      drawNode(boxes[j]);
+    }
+
+    drawFooter();
+  }
+
+  function loop(ts) {
+    render(ts / 1000);
+    requestAnimationFrame(loop);
+  }
+
+  /* ---------- 尺寸 ---------- */
+  function resize() {
+    var rect = shell.getBoundingClientRect();
+    cssW = rect.width;
+    cssH = rect.height;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+
+    scale = Math.min(cssW / LW, cssH / LH);
+    offX = (cssW - LW * scale) / 2;
+    offY = (cssH - LH * scale) / 2;
+
+    if (hovered) hideTip();
+  }
+
+  /* ---------- 悬停提示 ---------- */
+  function nodeAt(mx, my) {
+    for (var i = 0; i < boxes.length; i++) {
+      var b = boxes[i];
+      if (mx >= b.x && mx <= b.x + b.w && my >= b.y && my <= b.y + b.h) return b;
+    }
+    return null;
+  }
+
+  function showTip(node, cx, cy) {
+    tip.hidden = false;
+    tip.innerHTML = '<strong>' + node.t + '</strong><br>' + node.d;
+    var left = cx + 16;
+    var top = cy + 14;
+    var tw = 240;
+    if (left + tw > cssW) left = Math.max(cx - tw - 8, 6);
+    if (top + tip.offsetHeight > cssH) top = Math.max(cy - tip.offsetHeight - 10, 6);
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+
+  function hideTip() {
+    tip.hidden = true;
+    hovered = null;
+  }
+
+  canvas.addEventListener('pointermove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    var cx = e.clientX - rect.left;
+    var cy = e.clientY - rect.top;
+    var mx = (cx - offX) / scale;
+    var my = (cy - offY) / scale;
+    var node = nodeAt(mx, my);
+
+    hovered = node;
+    if (node) {
+      showTip(node, cx, cy);
+      canvas.style.cursor = 'pointer';
+    } else {
+      hideTip();
+      canvas.style.cursor = 'default';
+    }
+  });
+
+  canvas.addEventListener('pointerleave', hideTip);
+
+  window.addEventListener('resize', resize);
+
+  layout();
+  resize();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

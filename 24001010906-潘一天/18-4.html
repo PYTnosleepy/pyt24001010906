@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-4 · ECharts 数据图表 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lab18.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <span class="eyebrow">实验 18 · 4 · ECHARTS</span>
+    <h1>ECharts 数据可视化</h1>
+    <p class="page-sub">
+      引入本地 cdn/echarts.min.js（ECharts 5.5.1），绘制两个图表：近 7 日订单量 / 咨询量折线图、
+      客服咨询问题类型分布环形饼图。图表随容器宽度自适应，鼠标悬停可查看数值。
+    </p>
+  </header>
+
+  <main class="stage-card">
+    <div class="stage-card__head">
+      <div>
+        <h2>电商运营数据看板 · 示例</h2>
+        <p>数据为教学演示用模拟数据，图表配置全部写在页面脚本中。</p>
+      </div>
+      <div class="tools">
+        <span class="meter">ECharts <b>5.5.1</b> · 本地 cdn</span>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <section class="chart-card">
+        <h3>近 7 日订单量与咨询量</h3>
+        <p>折线图 · 双序列 · 带面积渐变</p>
+        <div class="chart-box" id="chart-line" aria-label="近七日订单量与咨询量折线图"></div>
+      </section>
+
+      <section class="chart-card">
+        <h3>客服咨询问题类型分布</h3>
+        <p>环形饼图 · 占比标注</p>
+        <div class="chart-box" id="chart-pie" aria-label="客服咨询问题类型分布环形饼图"></div>
+      </section>
+    </div>
+
+    <div class="hint-row">
+      <span>ECharts 已下载至 <b>cdn/echarts.min.js</b>，页面可完全离线运行</span>
+      <span>图表使用 <b>resize()</b> 跟随窗口变化</span>
+      <span>参考示例：ECharts 官方示例库（echarts.apache.org/examples）</span>
+    </div>
+
+    <div class="spec-strip">
+      <div class="spec-item">
+        <h4>折线图</h4>
+        <p>用 <b>smooth</b> 平滑曲线与 <b>areaStyle</b> 面积渐变表达趋势，双序列共用一条类目轴。</p>
+      </div>
+      <div class="spec-item">
+        <h4>环形饼图</h4>
+        <p>通过 <b>radius: ['42%', '68%']</b> 生成环形，label 同时显示名称与百分比。</p>
+      </div>
+      <div class="spec-item">
+        <h4>本地 cdn</h4>
+        <p>按作业要求把 echarts.min.js 下载到 <b>cdn/</b> 目录，用相对路径引入，不依赖外网。</p>
+      </div>
+    </div>
+  </main>
+
+  <nav class="lab-nav" aria-label="实验 18 页面导航">
+    <a href="18-1.html">18-1 Canvas 文字动画</a>
+    <a href="18-2.html">18-2 Canvas 电商架构图</a>
+    <a href="18-3.html">18-3 SVG 智能客服架构</a>
+    <a class="is-current" href="18-4.html">18-4 ECharts 图表</a>
+    <a href="18-6.html">18-6 Mermaid 图</a>
+    <a href="18-7.html">18-7 Three.js 图表</a>
+    <a href="18-8.html">18-8 数据大屏</a>
+  </nav>
+
+</div>
+
+<script src="cdn/echarts.min.js"></script>
+<script>
+(function () {
+  var FONT = '"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif';
+  var INK = '#1d2a23';
+  var MUTED = '#78877d';
+  var LINE = 'rgba(29, 42, 35, 0.10)';
+
+  if (!window.echarts) {
+    document.querySelectorAll('.chart-box').forEach(function (box) {
+      box.style.display = 'grid';
+      box.style.placeItems = 'center';
+      box.style.fontSize = '13px';
+      box.style.color = MUTED;
+      box.textContent = '未找到 cdn/echarts.min.js，请确认脚本已下载到 cdn 目录。';
+    });
+    return;
+  }
+
+  var lineChart = echarts.init(document.getElementById('chart-line'));
+  var pieChart = echarts.init(document.getElementById('chart-pie'));
+
+  var dates = ['10-30', '10-31', '11-01', '11-02', '11-03', '11-04', '11-05'];
+
+  lineChart.setOption({
+    color: ['#2f6b4f', '#d98e3f'],
+    textStyle: { fontFamily: FONT },
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(23, 38, 30, 0.92)',
+      borderWidth: 0,
+      textStyle: { color: '#eaf3ea', fontSize: 12 },
+      axisPointer: { type: 'line', lineStyle: { color: 'rgba(47, 107, 79, 0.4)' } }
+    },
+    legend: {
+      top: 0,
+      right: 0,
+      itemWidth: 18,
+      itemHeight: 8,
+      textStyle: { color: MUTED, fontSize: 11 }
+    },
+    grid: { left: 8, right: 12, top: 36, bottom: 8, containLabel: true },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: dates,
+      axisLine: { lineStyle: { color: LINE } },
+      axisTick: { show: false },
+      axisLabel: { color: MUTED, fontSize: 11 }
+    },
+    yAxis: {
+      type: 'value',
+      name: '单',
+      nameTextStyle: { color: MUTED, fontSize: 10, padding: [0, 0, 0, -6] },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: MUTED, fontSize: 10 },
+      splitLine: { lineStyle: { color: 'rgba(29, 42, 35, 0.06)' } }
+    },
+    series: [
+      {
+        name: '订单量',
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        lineStyle: { width: 2.4 },
+        itemStyle: { borderWidth: 2, borderColor: '#fff' },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(47, 107, 79, 0.28)' },
+            { offset: 1, color: 'rgba(47, 107, 79, 0.02)' }
+          ])
+        },
+        data: [1820, 1660, 1940, 2380, 2610, 3070, 2740]
+      },
+      {
+        name: '咨询量',
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 5,
+        lineStyle: { width: 2, type: 'dashed' },
+        itemStyle: { borderWidth: 2, borderColor: '#fff' },
+        data: [3180, 2890, 3420, 4080, 4360, 5020, 4610]
+      }
+    ]
+  });
+
+  pieChart.setOption({
+    color: ['#2f6b4f', '#d98e3f', '#54758c', '#6d7a4f', '#8fbf6f', '#c9b48a'],
+    textStyle: { fontFamily: FONT },
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(23, 38, 30, 0.92)',
+      borderWidth: 0,
+      textStyle: { color: '#eaf3ea', fontSize: 12 },
+      formatter: '{b}<br>{c} 次 · {d}%'
+    },
+    legend: {
+      orient: 'vertical',
+      right: 0,
+      top: 'center',
+      itemWidth: 10,
+      itemHeight: 10,
+      itemGap: 12,
+      textStyle: { color: MUTED, fontSize: 11 }
+    },
+    series: [
+      {
+        name: '咨询类型',
+        type: 'pie',
+        radius: ['42%', '68%'],
+        center: ['36%', '52%'],
+        avoidLabelOverlap: true,
+        itemStyle: {
+          borderColor: '#fff',
+          borderWidth: 3,
+          borderRadius: 6
+        },
+        label: {
+          show: true,
+          formatter: '{b}\n{d}%',
+          color: INK,
+          fontSize: 10,
+          lineHeight: 15
+        },
+        labelLine: { length: 10, length2: 8, lineStyle: { color: 'rgba(29, 42, 35, 0.25)' } },
+        emphasis: {
+          scale: true,
+          scaleSize: 6,
+          label: { fontSize: 11, fontWeight: 'bold' }
+        },
+        data: [
+          { value: 3200, name: '售前咨询' },
+          { value: 2100, name: '物流查询' },
+          { value: 1800, name: '退换售后' },
+          { value: 1500, name: '商品参数' },
+          { value: 900, name: '优惠活动' },
+          { value: 500, name: '其他' }
+        ]
+      }
+    ]
+  });
+
+  window.addEventListener('resize', function () {
+    lineChart.resize();
+    pieChart.resize();
+  });
+})();
+</script>
+</body>
+</html>

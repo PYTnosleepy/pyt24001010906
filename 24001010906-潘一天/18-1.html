@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-1 · Canvas 文字粒子动画 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lab18.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <span class="eyebrow">实验 18 · 1 · CANVAS</span>
+    <h1>Canvas 文字粒子动画</h1>
+    <p class="page-sub">
+      读取离屏画布上「潘一天」三个字的像素点，把每个采样点变成一个带颜色与振幅的粒子，
+      再用 requestAnimationFrame 逐帧做弹簧归位、正弦呼吸与鼠标排斥，形成文字聚合动画。
+    </p>
+  </header>
+
+  <main class="stage-card">
+    <div class="stage-card__head">
+      <div>
+        <h2>潘一天 · particle text</h2>
+        <p>采样点由文字轮廓决定，粒子数量随画布尺寸自动重算。</p>
+      </div>
+      <div class="tools">
+        <span class="meter">粒子 <b id="count">0</b></span>
+        <button class="tool-btn" id="replay" type="button">重播动画</button>
+        <button class="tool-btn" id="toggle" type="button">暂停</button>
+      </div>
+    </div>
+
+    <div class="canvas-shell">
+      <canvas id="scene" aria-label="由粒子聚合而成的文字动画：潘一天"></canvas>
+    </div>
+
+    <div class="hint-row">
+      <span>拖动 / 移动鼠标：推开附近粒子</span>
+      <span>点击画面：粒子重新散布再聚合</span>
+      <span>深色底 + 叠加混合：粒子形成拖尾光晕</span>
+    </div>
+  </main>
+
+  <nav class="lab-nav" aria-label="实验 18 页面导航">
+    <a class="is-current" href="18-1.html">18-1 Canvas 文字动画</a>
+    <a href="18-2.html">18-2 Canvas 电商架构图</a>
+    <a href="18-3.html">18-3 SVG 智能客服架构</a>
+    <a href="18-4.html">18-4 ECharts 图表</a>
+    <a href="18-6.html">18-6 Mermaid 图</a>
+    <a href="18-7.html">18-7 Three.js 图表</a>
+    <a href="18-8.html">18-8 数据大屏</a>
+  </nav>
+
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('scene');
+  var ctx = canvas.getContext('2d');
+  var countEl = document.getElementById('count');
+  var shell = canvas.parentElement;
+
+  var TAU = Math.PI * 2;
+  var TEXT = '潘一天';
+  var FONT_STACK = '"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif';
+  var COLORS = [
+    'rgba(168, 217, 138, 0.58)',
+    'rgba(233, 190, 122, 0.52)',
+    'rgba(238, 244, 230, 0.42)',
+    'rgba(111, 192, 161, 0.5)'
+  ];
+
+  var W = 0, H = 0, dpr = 1;
+  var particles = [];
+  var pointer = { x: -9999, y: -9999 };
+  var paused = false;
+  var resizeTimer = 0;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  /* 在离屏画布上画字，按像素 alpha 采样，得到文字轮廓上的点 */
+  function sampleText() {
+    var off = document.createElement('canvas');
+    off.width = Math.max(1, Math.round(W));
+    off.height = Math.max(1, Math.round(H));
+    var octx = off.getContext('2d');
+
+    var size = Math.min(W * 0.215, H * 0.5);
+    size = Math.max(size, 48);
+
+    octx.font = '900 ' + size + 'px ' + FONT_STACK;
+    octx.textAlign = 'center';
+    octx.textBaseline = 'middle';
+    octx.fillStyle = '#fff';
+    octx.fillText(TEXT, W / 2, H / 2 + size * 0.02);
+
+    var data = octx.getImageData(0, 0, off.width, off.height).data;
+    var gap = size > 160 ? 4 : 3;
+    var points = [];
+
+    for (var y = 0; y < off.height; y += gap) {
+      for (var x = 0; x < off.width; x += gap) {
+        if (data[(y * off.width + x) * 4 + 3] > 140) {
+          points.push({ x: x, y: y });
+        }
+      }
+    }
+    return points;
+  }
+
+  function scatter() {
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var angle = Math.random() * TAU;
+      var radius = rand(0.25, 0.72) * Math.max(W, H);
+      p.x = W / 2 + Math.cos(angle) * radius;
+      p.y = H / 2 + Math.sin(angle) * radius;
+      p.vx = 0;
+      p.vy = 0;
+    }
+  }
+
+  function build() {
+    var points = sampleText();
+    particles = points.map(function (pt) {
+      var angle = Math.random() * TAU;
+      var radius = rand(0.25, 0.72) * Math.max(W, H);
+      return {
+        tx: pt.x,
+        ty: pt.y,
+        x: W / 2 + Math.cos(angle) * radius,
+        y: H / 2 + Math.sin(angle) * radius,
+        vx: 0,
+        vy: 0,
+        r: rand(0.9, 1.9),
+        color: COLORS[(Math.random() * COLORS.length) >> 0],
+        ease: rand(0.014, 0.05),
+        phase: Math.random() * TAU,
+        amp: rand(0.6, 2.2)
+      };
+    });
+    countEl.textContent = particles.length;
+  }
+
+  function paintBackground() {
+    var grad = ctx.createRadialGradient(W * 0.5, H * 0.46, 8, W * 0.5, H * 0.5, Math.max(W, H) * 0.78);
+    grad.addColorStop(0, '#123226');
+    grad.addColorStop(0.55, '#0a1c15');
+    grad.addColorStop(1, '#040b08');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = 'rgba(150, 205, 168, 0.07)';
+    ctx.lineWidth = 1;
+    for (var x = 0; x <= W; x += 40) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    for (var y = 0; y <= H; y += 40) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+  }
+
+  function resize() {
+    var rect = shell.getBoundingClientRect();
+    W = Math.max(rect.width, 320);
+    H = Math.max(rect.height, 240);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    paintBackground();
+    build();
+  }
+
+  function update(t) {
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+
+      var tx = p.tx + Math.sin(t * 0.9 + p.phase) * p.amp;
+      var ty = p.ty + Math.cos(t * 1.1 + p.phase) * p.amp * 0.7;
+
+      var dx = p.x - pointer.x;
+      var dy = p.y - pointer.y;
+      var dist2 = dx * dx + dy * dy;
+      if (dist2 < 8100 && dist2 > 1) {
+        var dist = Math.sqrt(dist2);
+        var force = (90 - dist) / 90;
+        p.vx += (dx / dist) * force * 3.2;
+        p.vy += (dy / dist) * force * 3.2;
+      }
+
+      p.vx += (tx - p.x) * p.ease * 0.16;
+      p.vy += (ty - p.y) * p.ease * 0.16;
+      p.vx *= 0.9;
+      p.vy *= 0.9;
+      p.x += p.vx;
+      p.y += p.vy;
+    }
+  }
+
+  function render() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(5, 13, 10, 0.3)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, TAU);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function loop(ts) {
+    if (!paused) {
+      update(ts / 1000);
+      render();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  canvas.addEventListener('pointermove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  });
+
+  canvas.addEventListener('pointerleave', function () {
+    pointer.x = -9999;
+    pointer.y = -9999;
+  });
+
+  canvas.addEventListener('click', function () {
+    scatter();
+  });
+
+  document.getElementById('replay').addEventListener('click', function () {
+    scatter();
+    paused = false;
+    document.getElementById('toggle').textContent = '暂停';
+  });
+
+  document.getElementById('toggle').addEventListener('click', function () {
+    paused = !paused;
+    this.textContent = paused ? '继续' : '暂停';
+  });
+
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 180);
+  });
+
+  resize();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

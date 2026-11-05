@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-7 · Three.js 四个三维图表 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lab18.css">
+<style>
+  .viz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+  }
+
+  .viz-card {
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 16px 36px rgba(29, 42, 35, 0.07);
+  }
+  .viz-card h2 {
+    margin: 0 0 2px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .viz-card p {
+    margin: 0;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .viz-frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    min-height: 260px;
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: linear-gradient(160deg, #f4f9f0, #eaf1e8);
+  }
+  .viz-frame canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .viz-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .viz-legend span {
+    display: inline-flex;
+    align-items: center;
+  }
+  .viz-legend i {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 5px;
+    border-radius: 50%;
+  }
+  .viz-fail {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <span class="eyebrow">实验 18 · 7 · THREE.JS</span>
+    <h1>Three.js 三维数据图表</h1>
+    <p class="page-sub">
+      使用本地 cdn/three.min.js 与 cdn/OrbitControls.js，在四个独立场景中分别绘制三维柱状图、三维折线图、
+      三维环形图与三维曲面波动图。四个场景共享一个 requestAnimationFrame 循环，支持拖拽旋转与滚轮缩放。
+    </p>
+  </header>
+
+  <main class="stage-card">
+    <div class="stage-card__head">
+      <div>
+        <h2>WebGL 场景 × 4</h2>
+        <p>鼠标拖拽旋转视角，滚轮缩放；停止交互后自动缓慢旋转。</p>
+      </div>
+      <div class="tools">
+        <span class="meter">Three.js <b>r128</b></span>
+      </div>
+    </div>
+
+    <div class="viz-grid">
+      <section class="viz-card">
+        <h2>3D 柱状图 · 近 7 日会话量</h2>
+        <p>BoxGeometry + MeshStandardMaterial · 柱顶数值精灵</p>
+        <div class="viz-frame"><canvas id="viz-bar"></canvas></div>
+        <div class="viz-legend">
+          <span><i style="background:#2f6b4f"></i>工作日</span>
+          <span><i style="background:#d98e3f"></i>周末峰值</span>
+          <span>单位：百次</span>
+        </div>
+      </section>
+
+      <section class="viz-card">
+        <h2>3D 折线图 · 订单与咨询趋势</h2>
+        <p>CatmullRomCurve3 + TubeGeometry · 数据点球体</p>
+        <div class="viz-frame"><canvas id="viz-line"></canvas></div>
+        <div class="viz-legend">
+          <span><i style="background:#2f6b4f"></i>订单量</span>
+          <span><i style="background:#d98e3f"></i>咨询量</span>
+        </div>
+      </section>
+
+      <section class="viz-card">
+        <h2>3D 环形图 · 咨询问题构成</h2>
+        <p>Shape + ExtrudeGeometry · 扇形轻微外扩</p>
+        <div class="viz-frame"><canvas id="viz-pie"></canvas></div>
+        <div class="viz-legend">
+          <span><i style="background:#2f6b4f"></i>售前</span>
+          <span><i style="background:#d98e3f"></i>物流</span>
+          <span><i style="background:#54758c"></i>售后</span>
+          <span><i style="background:#6d7a4f"></i>参数</span>
+          <span><i style="background:#8fbf6f"></i>活动</span>
+          <span><i style="background:#c9b48a"></i>其他</span>
+        </div>
+      </section>
+
+      <section class="viz-card">
+        <h2>3D 曲面图 · 时段话务强度</h2>
+        <p>PlaneGeometry 顶点位移 + 顶点着色 · 逐帧波动</p>
+        <div class="viz-frame"><canvas id="viz-wave"></canvas></div>
+        <div class="viz-legend">
+          <span><i style="background:#2f6b4f"></i>低强度</span>
+          <span><i style="background:#e0b25a"></i>高强度</span>
+          <span>颜色随高度渐变</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="hint-row">
+      <span>所有几何体由代码生成，无外部模型文件</span>
+      <span>阴影关闭以降低开销，DPR 上限 2</span>
+      <span>拖动画面可查看背面结构</span>
+    </div>
+  </main>
+
+  <nav class="lab-nav" aria-label="实验 18 页面导航">
+    <a href="18-1.html">18-1 Canvas 文字动画</a>
+    <a href="18-2.html">18-2 Canvas 电商架构图</a>
+    <a href="18-3.html">18-3 SVG 智能客服架构</a>
+    <a href="18-4.html">18-4 ECharts 图表</a>
+    <a href="18-6.html">18-6 Mermaid 图</a>
+    <a class="is-current" href="18-7.html">18-7 Three.js 图表</a>
+    <a href="18-8.html">18-8 数据大屏</a>
+  </nav>
+
+</div>
+
+<script src="cdn/three.min.js"></script>
+<script src="cdn/OrbitControls.js"></script>
+<script>
+(function () {
+  var stages = [];
+  var PALETTE = ['#2f6b4f', '#3f7f6a', '#5b9478', '#69b07f', '#d98e3f', '#c8893f', '#54758c'];
+
+  if (!window.THREE) {
+    document.querySelectorAll('.viz-frame').forEach(function (frame) {
+      frame.innerHTML = '<div class="viz-fail">未找到 cdn/three.min.js，请确认文件已下载到 cdn 目录。</div>';
+    });
+    return;
+  }
+
+  function createStage(canvas) {
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+
+    var key = new THREE.DirectionalLight(0xffffff, 0.85);
+    key.position.set(7, 11, 9);
+    scene.add(key);
+
+    var fill = new THREE.DirectionalLight(0xd8ecdd, 0.45);
+    fill.position.set(-9, -5, -7);
+    scene.add(fill);
+
+    var controls = null;
+    if (THREE.OrbitControls) {
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.7;
+      controls.minDistance = 5;
+      controls.maxDistance = 30;
+    }
+
+    var stage = { renderer: renderer, scene: scene, camera: camera, controls: controls, update: null };
+    stages.push(stage);
+    return stage;
+  }
+
+  function aim(stage, x, y, z) {
+    if (stage.controls) {
+      stage.controls.target.set(x, y, z);
+      stage.controls.update();
+    } else {
+      stage.camera.lookAt(x, y, z);
+    }
+  }
+
+  function addGrid(stage, size) {
+    var grid = new THREE.GridHelper(size, size, 0xcfe3d3, 0xe6efe6);
+    grid.position.y = -0.01;
+    grid.material.transparent = true;
+    grid.material.opacity = 0.8;
+    stage.scene.add(grid);
+  }
+
+  function makeLabel(text, color, scale) {
+    var c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 128;
+    var g = c.getContext('2d');
+    g.font = '700 54px "PingFang SC","Microsoft YaHei",sans-serif';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillStyle = color || '#1d2a23';
+    g.fillText(text, 128, 66);
+
+    var tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+
+    var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: tex,
+      transparent: true,
+      depthWrite: false
+    }));
+    var k = scale || 1;
+    sprite.scale.set(1.4 * k, 0.7 * k, 1);
+    return sprite;
+  }
+
+  /* ---------- 1. 三维柱状图 ---------- */
+  (function () {
+    var stage = createStage(document.getElementById('viz-bar'));
+    addGrid(stage, 12);
+
+    var data = [42, 68, 55, 83, 61, 92, 74];
+    var colors = ['#2f6b4f', '#3f7f6a', '#5b9478', '#69b07f', '#d98e3f', '#c8893f', '#54758c'];
+    var n = data.length;
+
+    data.forEach(function (v, i) {
+      var h = v / 18;
+      var mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.72, h, 0.72),
+        new THREE.MeshStandardMaterial({ color: new THREE.Color(colors[i]), roughness: 0.38, metalness: 0.12 })
+      );
+      mesh.position.set(i - (n - 1) / 2, h / 2, 0);
+      stage.scene.add(mesh);
+
+      var label = makeLabel(String(v), '#4a5a51', 0.8);
+      label.position.set(mesh.position.x, h + 0.34, 0);
+      stage.scene.add(label);
+    });
+
+    stage.camera.position.set(7.5, 7, 9);
+    aim(stage, 0, 2, 0);
+  })();
+
+  /* ---------- 2. 三维折线图 ---------- */
+  (function () {
+    var stage = createStage(document.getElementById('viz-line'));
+    addGrid(stage, 12);
+
+    var series = [
+      { data: [24, 31, 28, 42, 39, 52, 48], color: '#2f6b4f', base: 0.6 },
+      { data: [18, 26, 22, 34, 30, 44, 41], color: '#d98e3f', base: 0.2 }
+    ];
+    var n = series[0].data.length;
+
+    series.forEach(function (se) {
+      var points = se.data.map(function (v, i) {
+        return new THREE.Vector3(i - (n - 1) / 2, se.base + v / 18, 0);
+      });
+
+      var curve = new THREE.CatmullRomCurve3(points);
+      var tube = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 80, 0.09, 10, false),
+        new THREE.MeshStandardMaterial({ color: new THREE.Color(se.color), roughness: 0.3, metalness: 0.25 })
+      );
+      stage.scene.add(tube);
+
+      points.forEach(function (p) {
+        var dot = new THREE.Mesh(
+          new THREE.SphereGeometry(0.13, 18, 14),
+          new THREE.MeshStandardMaterial({ color: new THREE.Color(se.color), roughness: 0.25 })
+        );
+        dot.position.copy(p);
+        stage.scene.add(dot);
+      });
+    });
+
+    stage.camera.position.set(7.5, 6, 9);
+    aim(stage, 0, 2.1, 0);
+  })();
+
+  /* ---------- 3. 三维环形图 ---------- */
+  (function () {
+    var stage = createStage(document.getElementById('viz-pie'));
+
+    var values = [32, 21, 18, 15, 9, 5];
+    var colors = ['#2f6b4f', '#d98e3f', '#54758c', '#6d7a4f', '#8fbf6f', '#c9b48a'];
+    var total = values.reduce(function (a, b) { return a + b; }, 0);
+    var outerR = 3.1;
+    var innerR = 1.75;
+    var depth = 0.5;
+    var angle = 0;
+
+    values.forEach(function (v, i) {
+      var span = v / total * Math.PI * 2;
+      var a0 = angle + 0.025;
+      var a1 = angle + span - 0.025;
+      angle += span;
+
+      var shape = new THREE.Shape();
+      shape.absarc(0, 0, outerR, a0, a1, false);
+
+      var hole = new THREE.Path();
+      hole.absarc(0, 0, innerR, a1, a0, true);
+      shape.holes.push(hole);
+
+      var mesh = new THREE.Mesh(
+        new THREE.ExtrudeGeometry(shape, {
+          depth: depth,
+          bevelEnabled: true,
+          bevelSize: 0.05,
+          bevelThickness: 0.05,
+          bevelSegments: 2,
+          curveSegments: 48
+        }),
+        new THREE.MeshStandardMaterial({ color: new THREE.Color(colors[i]), roughness: 0.35, metalness: 0.18 })
+      );
+
+      mesh.rotation.x = -Math.PI / 2;
+
+      var mid = (a0 + a1) / 2;
+      mesh.position.set(Math.cos(mid) * 0.16, 0.2, -Math.sin(mid) * 0.16);
+      stage.scene.add(mesh);
+    });
+
+    stage.camera.position.set(0, 7.5, 7);
+    aim(stage, 0, 0.4, 0);
+  })();
+
+  /* ---------- 4. 三维曲面图 ---------- */
+  (function () {
+    var stage = createStage(document.getElementById('viz-wave'));
+
+    var geometry = new THREE.PlaneGeometry(9, 9, 54, 54);
+    geometry.rotateX(-Math.PI / 2);
+
+    var pos = geometry.attributes.position;
+    var colors = new Float32Array(pos.count * 3);
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    var lowColor = new THREE.Color('#2f6b4f');
+    var highColor = new THREE.Color('#e0b25a');
+    var tmp = new THREE.Color();
+
+    function paint(time) {
+      for (var i = 0; i < pos.count; i++) {
+        var x = pos.getX(i);
+        var z = pos.getZ(i);
+        var y = Math.sin(x * 0.7 + time) * 0.32 + Math.cos(z * 0.55 + time * 0.8) * 0.28 + 0.5;
+        pos.setY(i, y);
+
+        var k = Math.min(Math.max(y / 1.1, 0), 1);
+        tmp.copy(lowColor).lerp(highColor, k);
+        colors[i * 3] = tmp.r;
+        colors[i * 3 + 1] = tmp.g;
+        colors[i * 3 + 2] = tmp.b;
+      }
+      pos.needsUpdate = true;
+      geometry.attributes.color.needsUpdate = true;
+    }
+
+    paint(0);
+
+    var mesh = new THREE.Mesh(
+      geometry,
+      new THREE.MeshStandardMaterial({
+        vertexColors: true,
+        side: THREE.DoubleSide,
+        roughness: 0.55,
+        metalness: 0.15,
+        flatShading: true
+      })
+    );
+    mesh.position.y = -0.3;
+    stage.scene.add(mesh);
+
+    stage.update = function (time) {
+      paint(time * 0.9);
+    };
+
+    stage.camera.position.set(0, 6.5, 8);
+    aim(stage, 0, 0.4, 0);
+  })();
+
+  /* ---------- 尺寸与渲染循环 ---------- */
+  function resizeAll() {
+    stages.forEach(function (stage) {
+      var parent = stage.renderer.domElement.parentElement;
+      var w = Math.max(parent.clientWidth, 100);
+      var h = Math.max(parent.clientHeight, 100);
+
+      stage.renderer.setSize(w, h, false);
+      stage.camera.aspect = w / h;
+      stage.camera.updateProjectionMatrix();
+    });
+  }
+
+  function loop(ts) {
+    var time = ts / 1000;
+    for (var i = 0; i < stages.length; i++) {
+      var stage = stages[i];
+      if (stage.update) stage.update(time);
+      if (stage.controls) stage.controls.update();
+      stage.renderer.render(stage.scene, stage.camera);
+    }
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resizeAll);
+
+  resizeAll();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

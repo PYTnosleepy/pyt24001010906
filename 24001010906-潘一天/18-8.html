@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-8 · 智能客服数据大屏 | 高级网页设计 I</title>
+<style>
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    overflow: hidden;
+    background: #04100c;
+    color: #d8e8e0;
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .dash {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100vh;
+    padding: 14px 22px 20px;
+    background:
+      radial-gradient(1200px 520px at 50% -12%, rgba(47, 107, 79, 0.38), transparent 62%),
+      radial-gradient(900px 640px at -6% 108%, rgba(84, 117, 140, 0.20), transparent 60%),
+      radial-gradient(900px 640px at 106% 108%, rgba(120, 160, 90, 0.14), transparent 60%),
+      linear-gradient(180deg, #071914 0%, #04110d 55%, #030b08 100%);
+  }
+
+  .dash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(90, 190, 155, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(90, 190, 155, 0.055) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 25%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 25%, transparent 78%);
+  }
+
+  .dash-head {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    flex: none;
+    height: 54px;
+    border-bottom: 1px solid rgba(90, 190, 155, 0.18);
+  }
+
+  .dash-head h1 {
+    margin: 0;
+    font-size: clamp(17px, 1.7vw, 25px);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #e6f5ec;
+    text-shadow: 0 0 20px rgba(90, 210, 165, 0.35);
+    white-space: nowrap;
+  }
+
+  .head-side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: #6f9c87;
+  }
+  .head-side--right {
+    justify-content: flex-end;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    color: #9fe0c2;
+    letter-spacing: 0.1em;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    border: 1px solid rgba(90, 190, 155, 0.35);
+    border-radius: 999px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: #8ff0c9;
+  }
+
+  .head-link {
+    color: #6f9c87;
+    text-decoration: none;
+    font-size: 11px;
+    transition: color 0.2s;
+  }
+  .head-link:hover { color: #8ff0c9; }
+
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(80, 220, 170, 0.1);
+    color: #6fe3b3;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+  .live i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6fe3b3;
+    box-shadow: 0 0 8px #6fe3b3;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .dash-grid {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.5fr) minmax(0, 0.96fr);
+    gap: 12px;
+  }
+
+  .dash-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .panel {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    padding: 10px 12px 8px;
+    overflow: hidden;
+    border: 1px solid rgba(88, 178, 148, 0.22);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(11, 37, 31, 0.92), rgba(6, 22, 18, 0.94));
+    box-shadow:
+      inset 0 0 26px rgba(45, 130, 100, 0.10),
+      0 10px 26px rgba(0, 0, 0, 0.28);
+  }
+
+  .panel h2 {
+    position: relative;
+    flex: none;
+    margin: 0 0 6px;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #9fe0c2;
+  }
+  .panel h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 3px;
+    height: 11px;
+    border-radius: 2px;
+    background: #4fd1a5;
+    box-shadow: 0 0 8px #4fd1a5;
+  }
+
+  .chart {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+  }
+
+  /* 指标卡 */
+  .panel.kpi {
+    display: grid;
+    flex: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .kpi-item {
+    padding: 8px 10px;
+    border: 1px solid rgba(88, 178, 148, 0.16);
+    border-radius: 8px;
+    background: rgba(20, 60, 48, 0.32);
+  }
+  .kpi-item label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: #7fae98;
+  }
+  .kpi-item strong {
+    display: block;
+    margin-top: 3px;
+    font-size: clamp(16px, 1.35vw, 21px);
+    font-weight: 700;
+    color: #8ff0c9;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 14px rgba(80, 220, 170, 0.32);
+  }
+  .kpi-item em {
+    font-style: normal;
+    font-size: 10px;
+    color: #5fd3a6;
+  }
+  .kpi-item em.down { color: #e0a05a; }
+
+  /* 中间列：地理图占比更大 */
+  .panel--map { flex: 1.55 1 0; }
+
+  /* TOP5 排行 */
+  .rank {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0 2px;
+    list-style: none;
+  }
+  .rank li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 9px;
+    font-size: 11px;
+  }
+  .rank .rk {
+    color: #4fd1a5;
+    font-family: Consolas, monospace;
+    font-weight: 700;
+  }
+  .rank .rn {
+    overflow: hidden;
+    color: #c3ded1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .rank b {
+    color: #8ff0c9;
+    font-weight: 600;
+  }
+  .rank i {
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #2f6b4f, #6fe3b3);
+    box-shadow: 0 0 8px rgba(80, 220, 170, 0.45);
+  }
+
+  .dash-fail {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 12px;
+    font-size: 12px;
+    color: #7fae98;
+  }
+
+  @media (max-height: 780px) {
+    .dash { height: auto; min-height: 100vh; overflow-y: auto; }
+    .dash-grid { min-height: 880px; }
+    .panel { min-height: 200px; }
+    .panel.kpi { min-height: 0; }
+  }
+
+  @media (max-width: 1100px) {
+    body { overflow: auto; }
+    .dash { height: auto; min-height: 100vh; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .dash-col { min-height: 0; }
+    .panel { min-height: 280px; }
+    .panel--map { min-height: 460px; }
+    .dash-head { grid-template-columns: 1fr; height: auto; padding-bottom: 10px; }
+    .head-side, .head-side--right { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dash">
+  <header class="dash-head">
+    <div class="head-side">
+      <span class="tag">实验 18 · 8</span>
+      <a class="head-link" href="18-7.html">← 18-7 Three.js</a>
+    </div>
+    <h1>智能客服运营监控中心</h1>
+    <div class="head-side head-side--right">
+      <span class="live"><i></i>LIVE</span>
+      <span id="clock">--:--:--</span>
+    </div>
+  </header>
+
+  <main class="dash-grid">
+    <!-- 左列 -->
+    <section class="dash-col">
+      <div class="panel kpi">
+        <div class="kpi-item">
+          <label>今日会话量</label>
+          <strong>12,846</strong>
+          <em>环比 +8.2%</em>
+        </div>
+        <div class="kpi-item">
+          <label>机器人解决率</label>
+          <strong>82.4%</strong>
+          <em>环比 +2.6%</em>
+        </div>
+        <div class="kpi-item">
+          <label>平均响应时长</label>
+          <strong>1.9s</strong>
+          <em class="down">环比 -0.3s</em>
+        </div>
+        <div class="kpi-item">
+          <label>客户满意度</label>
+          <strong>96.2%</strong>
+          <em>环比 +1.1%</em>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>各省份会话量 TOP 8</h2>
+        <div class="chart" id="bar-region"></div>
+      </div>
+
+      <div class="panel">
+        <h2>服务渠道分布</h2>
+        <div class="chart" id="bar-channel"></div>
+      </div>
+    </section>
+
+    <!-- 中列：上为地理信息图 -->
+    <section class="dash-col dash-col--mid">
+      <div class="panel panel--map">
+        <h2>全国客服请求热力分布</h2>
+        <div class="chart" id="map-china"></div>
+      </div>
+
+      <div class="panel">
+        <h2>24 小时会话趋势</h2>
+        <div class="chart" id="line-trend"></div>
+      </div>
+    </section>
+
+    <!-- 右列 -->
+    <section class="dash-col">
+      <div class="panel">
+        <h2>问题类型占比</h2>
+        <div class="chart" id="pie-type"></div>
+      </div>
+
+      <div class="panel">
+        <h2>客户满意度指数</h2>
+        <div class="chart" id="gauge-sat"></div>
+      </div>
+
+      <div class="panel">
+        <h2>知识库命中 TOP 5</h2>
+        <ul class="rank">
+          <li><span class="rk">01</span><span class="rn">退货与退款流程</span><b>92%</b><i style="width:92%"></i></li>
+          <li><span class="rk">02</span><span class="rn">物流进度查询</span><b>88%</b><i style="width:88%"></i></li>
+          <li><span class="rk">03</span><span class="rn">商品参数与规格</span><b>84%</b><i style="width:84%"></i></li>
+          <li><span class="rk">04</span><span class="rn">优惠券使用规则</span><b>79%</b><i style="width:79%"></i></li>
+          <li><span class="rk">05</span><span class="rn">发票开具说明</span><b>73%</b><i style="width:73%"></i></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="cdn/echarts.min.js"></script>
+<script src="cdn/china-geo.js"></script>
+<script>
+(function () {
+  var charts = [];
+
+  if (!window.echarts) {
+    document.querySelectorAll('.chart').forEach(function (box) {
+      box.innerHTML = '<div class="dash-fail">未找到 cdn/echarts.min.js，请确认文件已下载到 cdn 目录。</div>';
+    });
+    return;
+  }
+
+  var AXIS = '#93b9a9';
+  var AXIS_LINE = 'rgba(90, 180, 150, 0.16)';
+  var SPLIT = 'rgba(90, 180, 150, 0.10)';
+  var TOOLTIP = {
+    backgroundColor: 'rgba(8, 30, 24, 0.94)',
+    borderColor: 'rgba(90, 190, 155, 0.35)',
+    borderWidth: 1,
+    textStyle: { color: '#d8f2e6', fontSize: 12 }
+  };
+
+  function init(id) {
+    var chart = echarts.init(document.getElementById(id));
+    charts.push(chart);
+    return chart;
+  }
+
+  /* 1. 各省份会话量 */
+  var region = init('bar-region');
+  region.setOption({
+    grid: { left: 62, right: 30, top: 8, bottom: 8 },
+    tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, TOOLTIP),
+    xAxis: { type: 'value', show: false, max: 1400 },
+    yAxis: {
+      type: 'category',
+      inverse: true,
+      data: ['广东', '江苏', '浙江', '山东', '四川', '河南', '北京', '上海'],
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: AXIS, fontSize: 10, margin: 10 }
+    },
+    series: [{
+      type: 'bar',
+      barWidth: 9,
+      showBackground: true,
+      backgroundStyle: { color: 'rgba(80, 160, 130, 0.08)', borderRadius: 5 },
+      itemStyle: {
+        borderRadius: 5,
+        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+          { offset: 0, color: '#1c5a44' },
+          { offset: 1, color: '#6fe3b3' }
+        ])
+      },
+      label: {
+        show: true,
+        position: 'right',
+        color: '#8ff0c9',
+        fontSize: 10,
+        formatter: '{c}'
+      },
+      data: [1286, 982, 876, 754, 690, 612, 586, 542]
+    }]
+  });
+
+  /* 2. 服务渠道 */
+  var channel = init('bar-channel');
+  channel.setOption({
+    grid: { left: 8, right: 14, top: 24, bottom: 6, containLabel: true },
+    tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, TOOLTIP),
+    xAxis: {
+      type: 'category',
+      data: ['网页', '企业微信', 'App', '电话'],
+      axisLine: { lineStyle: { color: AXIS_LINE } },
+      axisTick: { show: false },
+      axisLabel: { color: AXIS, fontSize: 10 }
+    },
+    yAxis: {
+      type: 'value',
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: AXIS, fontSize: 9 },
+      splitLine: { lineStyle: { color: SPLIT } }
+    },
+    series: [{
+      type: 'bar',
+      barWidth: 26,
+      itemStyle: { borderRadius: [6, 6, 0, 0] },
+      label: { show: true, position: 'top', color: '#8ff0c9', fontSize: 10, formatter: '{c}%' },
+      data: [
+        { value: 42, itemStyle: { color: '#6fe3b3' } },
+        { value: 27, itemStyle: { color: '#4fd1a5' } },
+        { value: 19, itemStyle: { color: '#2f9d76' } },
+        { value: 12, itemStyle: { color: '#e0a05a' } }
+      ]
+    }]
+  });
+
+  /* 3. 全国地图 */
+  if (window.CHINA_GEO) {
+    echarts.registerMap('china', window.CHINA_GEO);
+  }
+
+  var mapChart = init('map-china');
+  mapChart.setOption({
+    tooltip: Object.assign({ trigger: 'item', formatter: '{b}<br>{c} 次会话' }, TOOLTIP),
+    visualMap: {
+      show: false,
+      min: 0,
+      max: 1400,
+      seriesIndex: 0,
+      inRange: { color: ['#0d3a48', '#1e6f6a', '#2f9d76', '#7fe0b0', '#e6c07a'] }
+    },
+    series: [{
+      type: 'map',
+      map: 'china',
+      roam: false,
+      zoom: 1.18,
+      top: 4,
+      bottom: 4,
+      aspectScale: 0.82,
+      label: { show: true, color: 'rgba(200, 235, 220, 0.7)', fontSize: 9 },
+      itemStyle: {
+        areaColor: '#0c2a24',
+        borderColor: 'rgba(90, 190, 160, 0.45)',
+        borderWidth: 0.8
+      },
+      emphasis: {
+        label: { color: '#ffffff', fontSize: 11 },
+        itemStyle: { areaColor: '#2f9b78', borderColor: '#8ff0c9' }
+      },
+      data: [
+        { name: '广东', value: 1286 },
+        { name: '江苏', value: 982 },
+        { name: '浙江', value: 876 },
+        { name: '山东', value: 754 },
+        { name: '四川', value: 690 },
+        { name: '河南', value: 612 },
+        { name: '北京', value: 586 },
+        { name: '上海', value: 542 },
+        { name: '湖北', value: 468 },
+        { name: '福建', value: 432 },
+        { name: '湖南', value: 398 },
+        { name: '河北', value: 366 },
+        { name: '陕西', value: 312 },
+        { name: '辽宁', value: 286 },
+        { name: '安徽', value: 264 },
+        { name: '重庆', value: 241 }
+      ]
+    }]
+  });
+
+  /* 4. 24 小时趋势 */
+  var hours = [];
+  for (var h = 0; h < 24; h++) {
+    hours.push((h < 10 ? '0' + h : h) + ':00');
+  }
+
+  var trend = init('line-trend');
+  trend.setOption({
+    grid: { left: 8, right: 16, top: 28, bottom: 4, containLabel: true },
+    tooltip: Object.assign({ trigger: 'axis' }, TOOLTIP),
+    legend: {
+      top: 0,
+      right: 0,
+      itemWidth: 12,
+      itemHeight: 6,
+      textStyle: { color: AXIS, fontSize: 10 }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: hours,
+      axisLine: { lineStyle: { color: AXIS_LINE } },
+      axisTick: { show: false },
+      axisLabel: { color: AXIS, fontSize: 9, interval: 3 }
+    },
+    yAxis: {
+      type: 'value',
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: AXIS, fontSize: 9 },
+      splitLine: { lineStyle: { color: SPLIT } }
+    },
+    series: [
+      {
+        name: '会话量',
+        type: 'line',
+        smooth: true,
+        symbol: 'none',
+        lineStyle: { width: 2, color: '#6fe3b3' },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(111, 227, 179, 0.28)' },
+            { offset: 1, color: 'rgba(111, 227, 179, 0.02)' }
+          ])
+        },
+        data: [320, 268, 205, 168, 142, 190, 356, 612, 1048, 1266, 1131, 998, 872, 954, 1102, 1186, 1230, 1088, 932, 806, 712, 604, 486, 392]
+      },
+      {
+        name: '转人工',
+        type: 'line',
+        smooth: true,
+        symbol: 'none',
+        lineStyle: { width: 1.6, color: '#e0a05a', type: 'dashed' },
+        data: [86, 71, 52, 44, 38, 47, 92, 158, 246, 298, 262, 231, 208, 224, 258, 276, 288, 254, 218, 188, 166, 142, 118, 96]
+      }
+    ]
+  });
+
+  /* 5. 问题类型 */
+  var pie = init('pie-type');
+  pie.setOption({
+    color: ['#6fe3b3', '#4fd1a5', '#2f9d76', '#54758c', '#c8893f', '#c9b48a'],
+    tooltip: Object.assign({ trigger: 'item', formatter: '{b}<br>{c} 次 · {d}%' }, TOOLTIP),
+    legend: {
+      orient: 'vertical',
+      right: 0,
+      top: 'middle',
+      itemWidth: 9,
+      itemHeight: 9,
+      itemGap: 9,
+      textStyle: { color: AXIS, fontSize: 10 }
+    },
+    series: [{
+      type: 'pie',
+      radius: ['40%', '64%'],
+      center: ['35%', '52%'],
+      itemStyle: { borderColor: '#071914', borderWidth: 2, borderRadius: 4 },
+      label: {
+        show: true,
+        formatter: '{d}%',
+        color: '#b7dccc',
+        fontSize: 10
+      },
+      labelLine: { length: 8, length2: 6, lineStyle: { color: 'rgba(90, 180, 150, 0.3)' } },
+      data: [
+        { value: 3200, name: '售前咨询' },
+        { value: 2100, name: '物流查询' },
+        { value: 1800, name: '退换售后' },
+        { value: 1500, name: '商品参数' },
+        { value: 900, name: '优惠活动' },
+        { value: 500, name: '其他' }
+      ]
+    }]
+  });
+
+  /* 6. 满意度仪表盘 */
+  var gauge = init('gauge-sat');
+  gauge.setOption({
+    series: [{
+      type: 'gauge',
+      startAngle: 210,
+      endAngle: -30,
+      min: 0,
+      max: 100,
+      radius: '88%',
+      center: ['50%', '56%'],
+      pointer: { show: false },
+      anchor: { show: false },
+      axisTick: { show: false },
+      splitLine: { show: false },
+      axisLabel: { show: false },
+      axisLine: {
+        lineStyle: { width: 10, color: [[1, 'rgba(90, 180, 150, 0.12)']] }
+      },
+      progress: {
+        show: true,
+        width: 10,
+        roundCap: true,
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
+            { offset: 0, color: '#2f9d76' },
+            { offset: 1, color: '#8ff0c9' }
+          ])
+        }
+      },
+      detail: {
+        valueAnimation: true,
+        offsetCenter: [0, '22%'],
+        formatter: '{value}%',
+        color: '#8ff0c9',
+        fontSize: 22,
+        fontWeight: 700
+      },
+      title: {
+        offsetCenter: [0, '58%'],
+        color: '#7fae98',
+        fontSize: 10
+      },
+      data: [{ value: 96.2, name: '满意度指数' }]
+    }]
+  });
+
+  /* 时钟 */
+  function tickClock() {
+    var now = new Date();
+    var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+    document.getElementById('clock').textContent =
+      now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) +
+      ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* 自适应 */
+  function resizeAll() {
+    charts.forEach(function (c) { c.resize(); });
+  }
+  window.addEventListener('resize', resizeAll);
+  requestAnimationFrame(resizeAll);
+  setTimeout(resizeAll, 300);
+})();
+</script>
+</body>
+</html>

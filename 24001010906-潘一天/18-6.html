@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18-6 · Mermaid 流程图与 ER 图 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lab18.css">
+<style>
+  .mermaid-wrap {
+    padding: 20px 16px;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(29, 42, 35, 0.08);
+  }
+  .mermaid-wrap .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    min-width: 520px;
+  }
+  .mermaid-wrap svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .sect-gap { margin-bottom: 22px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <span class="eyebrow">实验 18 · 6 · MERMAID</span>
+    <h1>Mermaid 流程图与 ER 图</h1>
+    <p class="page-sub">
+      Mermaid 用纯文本描述图形：流程图描述智能客服的问答主链路（意图识别 → 知识召回 → 大模型生成 → 转人工），
+      ER 图描述会话、消息、意图、知识条目、工单与客服坐席之间的实体关系。图形在浏览器端实时渲染为 SVG。
+    </p>
+  </header>
+
+  <main>
+    <section class="stage-card sect-gap">
+      <div class="stage-card__head">
+        <div>
+          <h2>智能客服系统 · 问答流程图</h2>
+          <p>flowchart TD · 自动布局 · 修改文本即可重绘</p>
+        </div>
+        <div class="tools">
+          <span class="meter">节点 <b>14</b></span>
+        </div>
+      </div>
+
+      <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart TD
+    A([用户发起咨询]) --> B[渠道接入&lt;br/&gt;网页 · 企业微信 · App · 电话]
+    B --> C{意图识别}
+    C -->|寒暄 / 闲聊| D[闲聊应答]
+    C -->|业务问题| E{知识库是否命中}
+    E -->|命中| F[多路召回&lt;br/&gt;向量 · FAQ · 知识图谱]
+    E -->|未命中| G[转人工&lt;br/&gt;创建工单]
+    F --> H[重排与片段拼接]
+    H --> I[大模型生成答案]
+    I --> J{置信度 ≥ 阈值}
+    J -->|是| K[返回答案]
+    J -->|否| G
+    K --> L[满意度评价]
+    L --> M[(知识沉淀与更新)]
+    G --> N([人工客服处理])
+    N --> L
+
+    classDef startNode fill:#2f6b4f,stroke:#24553e,color:#ffffff;
+    classDef decision fill:#fdf3e3,stroke:#d98e3f,color:#7a5321;
+    classDef store fill:#eef4f8,stroke:#54758c,color:#243b4a;
+    class A,N startNode;
+    class C,E,J decision;
+    class M store;
+</pre>
+      </div>
+
+      <div class="hint-row">
+        <span><b>绿色</b>：会话入口 / 人工入口</span>
+        <span><b>橙色</b>：判断分支</span>
+        <span><b>蓝色</b>：知识沉淀</span>
+      </div>
+    </section>
+
+    <section class="stage-card">
+      <div class="stage-card__head">
+        <div>
+          <h2>会话与知识数据模型 · ER 图</h2>
+          <p>erDiagram · 8 个实体 · 主外键与关系基数</p>
+        </div>
+        <div class="tools">
+          <span class="meter">实体 <b>8</b></span>
+        </div>
+      </div>
+
+      <div class="mermaid-wrap">
+<pre class="mermaid">
+erDiagram
+    USER ||--o{ SESSION : "发起"
+    SESSION ||--o{ MESSAGE : "包含"
+    SESSION ||--o{ TICKET : "转人工"
+    AGENT ||--o{ TICKET : "处理"
+    INTENT ||--o{ MESSAGE : "识别"
+    INTENT ||--o{ KB_ITEM : "关联"
+    KB_ITEM ||--o{ QA_PAIR : "拆分"
+
+    USER {
+        bigint id PK "用户 ID"
+        varchar nickname "昵称"
+        varchar channel "来源渠道"
+        datetime created_at "注册时间"
+    }
+
+    SESSION {
+        bigint id PK "会话 ID"
+        bigint user_id FK "所属用户"
+        varchar status "会话状态"
+        datetime started_at "开始时间"
+    }
+
+    MESSAGE {
+        bigint id PK "消息 ID"
+        bigint session_id FK "所属会话"
+        bigint intent_id FK "命中意图"
+        varchar role "角色：用户 / 机器人"
+        text content "消息内容"
+        datetime sent_at "发送时间"
+    }
+
+    INTENT {
+        bigint id PK "意图 ID"
+        varchar name "意图名称"
+        decimal confidence "置信度"
+    }
+
+    KB_ITEM {
+        bigint id PK "知识条目 ID"
+        bigint intent_id FK "关联意图"
+        varchar title "标题"
+        varchar category "分类"
+        varchar vector_id "向量索引 ID"
+    }
+
+    QA_PAIR {
+        bigint id PK "问答对 ID"
+        bigint kb_id FK "所属知识条目"
+        text question "标准问题"
+        text answer "标准答案"
+    }
+
+    TICKET {
+        bigint id PK "工单 ID"
+        bigint session_id FK "来源会话"
+        bigint agent_id FK "处理坐席"
+        varchar status "工单状态"
+        datetime created_at "创建时间"
+    }
+
+    AGENT {
+        bigint id PK "坐席 ID"
+        varchar name "坐席姓名"
+        varchar group_name "所属班组"
+    }
+</pre>
+      </div>
+
+      <div class="hint-row">
+        <span><b>||--o{</b> 一对多</span>
+        <span><b>}o--||</b> 多对一</span>
+        <span>PK 主键 · FK 外键 · 属性注释用于说明字段含义</span>
+      </div>
+    </section>
+  </main>
+
+  <nav class="lab-nav" aria-label="实验 18 页面导航">
+    <a href="18-1.html">18-1 Canvas 文字动画</a>
+    <a href="18-2.html">18-2 Canvas 电商架构图</a>
+    <a href="18-3.html">18-3 SVG 智能客服架构</a>
+    <a href="18-4.html">18-4 ECharts 图表</a>
+    <a class="is-current" href="18-6.html">18-6 Mermaid 图</a>
+    <a href="18-7.html">18-7 Three.js 图表</a>
+    <a href="18-8.html">18-8 数据大屏</a>
+  </nav>
+
+</div>
+
+<script src="cdn/mermaid.min.js"></script>
+<script>
+(function () {
+  if (!window.mermaid) {
+    document.querySelectorAll('.mermaid').forEach(function (el) {
+      el.textContent = '未找到 cdn/mermaid.min.js，请确认文件已下载到 cdn 目录。';
+    });
+    return;
+  }
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    securityLevel: 'loose',
+    fontFamily: '"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif',
+    themeVariables: {
+      fontFamily: '"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif',
+      fontSize: '14px',
+      primaryColor: '#2f6b4f',
+      primaryTextColor: '#ffffff',
+      primaryBorderColor: '#24553e',
+      lineColor: '#7d8b81',
+      secondaryColor: '#e3efe5',
+      tertiaryColor: '#f7f4ec',
+      mainBkg: '#ffffff',
+      nodeBorder: '#2f6b4f',
+      clusterBkg: '#f4f8f0',
+      clusterBorder: '#dbe8dc',
+      edgeLabelBackground: '#ffffff',
+      attributeBackgroundColorOdd: '#ffffff',
+      attributeBackgroundColorEven: '#f4f8f0'
+    },
+    flowchart: { curve: 'basis', padding: 14, nodeSpacing: 46, rankSpacing: 52 },
+    er: { diagramPadding: 18, minEntityWidth: 120, entityPadding: 12 }
+  });
+
+  mermaid.run({ nodes: Array.prototype.slice.call(document.querySelectorAll('.mermaid')) });
+})();
+</script>
+</body>
+</html>
