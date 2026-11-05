@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="青柠羽衣甘蓝果汁插画">
+  <rect width="120" height="120" fill="#eef4e8"/>
+  <circle cx="100" cy="22" r="24" fill="#e2ecd8"/>
+  <circle cx="18" cy="100" r="20" fill="#e2ecd8"/>
+
+  <ellipse cx="60" cy="100" rx="26" ry="7" fill="#dfe8d5"/>
+
+  <rect x="42" y="26" width="36" height="72" rx="14" fill="#e8f0e2"/>
+  <rect x="44" y="46" width="32" height="50" rx="11" fill="#8fbf6f"/>
+  <rect x="44" y="62" width="32" height="34" rx="11" fill="#6ea85a"/>
+
+  <rect x="46" y="78" width="28" height="16" rx="4" fill="#ffffff" opacity="0.9"/>
+  <rect x="50" y="84" width="20" height="3" rx="1.5" fill="#6ea85a"/>
+  <rect x="56" y="90" width="14" height="2.4" rx="1.2" fill="#c7d8b8"/>
+
+  <rect x="49" y="14" width="22" height="14" rx="5" fill="#3f7a4d"/>
+  <rect x="55" y="8" width="10" height="8" rx="3" fill="#2f6b4f"/>
+
+  <rect x="66" y="16" width="6" height="34" rx="3" transform="rotate(14 66 16)" fill="#d98e3f"/>
+
+  <g fill="#cfe0be" opacity="0.85">
+    <circle cx="52" cy="56" r="2.2"/>
+    <circle cx="64" cy="52" r="1.8"/>
+    <circle cx="70" cy="68" r="2"/>
+  </g>
+</svg>

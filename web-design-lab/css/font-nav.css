@@ -1,0 +1,81 @@
+/* ===== 方案 A：字体图标（iconfont） ===== */
+
+/* 自定义图标字体：由 icons-src/ 下的 SVG 生成，等价于 iconfont 项目导出的字体文件 */
+@font-face {
+  font-family: "lab-icons";
+  src: url("../fonts/lab-icons.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.iconfont {
+  display: inline-block;
+  font-family: "lab-icons" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-transform: none;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.22s, font-size 0.22s, transform 0.22s;
+}
+
+.icon-home::before   { content: "\e001"; }
+.icon-menu::before   { content: "\e002"; }
+.icon-order::before  { content: "\e003"; }
+.icon-user::before   { content: "\e004"; }
+.icon-search::before { content: "\e005"; }
+.icon-star::before   { content: "\e006"; }
+
+/* 应用内的图标尺寸 */
+.brand__logo .iconfont { font-size: 19px; }
+.icon-btn .iconfont    { font-size: 18px; }
+.rating .iconfont      { font-size: 12px; }
+
+/* 下导航：图标 + 文字，宽度按 flex 均分实现自适应 */
+.tab .iconfont {
+  font-size: 22px;
+}
+
+.tab.is-active .iconfont {
+  font-size: 24px;
+}
+
+.tab.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 2px 8px;
+  z-index: 0;
+  border-radius: 12px;
+  background: var(--brand-soft);
+}
+
+.tab .iconfont,
+.tab .tab__label,
+.tab .badge {
+  position: relative;
+  z-index: 1;
+}
+
+.tab.is-active .tab__label {
+  font-weight: 700;
+}
+
+/* 点击时的图标反馈（纯 CSS 字体图标动画） */
+.tab:active .iconfont {
+  transform: scale(0.86);
+}
+
+/* 右侧演示区：字号与颜色均由 CSS 控制 */
+.spec__icons .iconfont {
+  color: var(--brand);
+  line-height: 1;
+}
+.spec__icons .size-24 { font-size: 24px; }
+.spec__icons .size-32 { font-size: 32px; }
+.spec__icons .size-44 { font-size: 44px; }
+.spec__icons .color-accent { color: var(--accent); }
+.spec__icons .color-muted { color: var(--muted); }

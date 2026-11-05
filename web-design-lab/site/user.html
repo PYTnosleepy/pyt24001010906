@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="青禾轻食个人中心：会员积分、优惠券、地址与设置。">
+<title>我的 · 青禾轻食</title>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="mode-font">
+<script src="assets/js/site.js"></script>
+
+<header class="site-header">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__logo">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+      </span>
+      <span class="brand__text"><b>青禾轻食</b><small>FRESH &amp; LIGHT</small></span>
+    </a>
+    <nav class="header__nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="menu.html">菜单</a>
+      <a href="order.html">订单</a>
+      <a href="user.html" aria-current="page">我的</a>
+    </nav>
+    <div class="header__actions">
+      <div class="mode-switch" role="group" aria-label="图标实现方案">
+        <button type="button" data-mode="font">字体图标</button>
+        <button type="button" data-mode="svg">SVG</button>
+      </div>
+      <a class="cart-btn" href="order.html" aria-label="查看订单与购物车">
+        <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        <span class="cart-count" data-cart-count data-zero="1">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="page-hero">
+    <span class="eyebrow">MY ACCOUNT</span>
+    <h1>个人中心</h1>
+    <p>会员积分、优惠券、收货地址与账号设置都在这里。</p>
+  </section>
+
+  <section class="section section--tight">
+    <div class="profile">
+      <div class="profile__avatar">
+        <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+      </div>
+      <div>
+        <h2>潘一天</h2>
+        <p>注册 286 天 · 累计点单 42 次 · 静安店常客</p>
+      </div>
+      <span class="profile__level">青禾 · 金卡会员</span>
+    </div>
+
+    <div class="quick-stats">
+      <div class="quick-stat"><b>1280</b><span>可用积分</span></div>
+      <div class="quick-stat"><b>3</b><span>优惠券</span></div>
+      <div class="quick-stat"><b>6</b><span>收藏菜品</span></div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-label="常用功能">
+    <div class="entry-grid">
+      <a class="entry" href="order.html">
+        <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        <span>我的订单</span>
+      </a>
+      <a class="entry" href="#benefits">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+        <span>优惠券</span>
+      </a>
+      <a class="entry" href="#settings">
+        <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+        <span>收货地址</span>
+      </a>
+      <a class="entry" href="menu.html">
+        <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+        <span>我的收藏</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="two-col">
+      <div>
+        <div class="section-head">
+          <div><h2 id="settings">账号与设置</h2></div>
+        </div>
+        <div class="setting-list">
+          <a class="setting-row" href="#settings">
+            <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+            <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+            <span>账号与安全</span>
+            <span class="setting-row__value">已实名</span>
+            <span class="setting-row__arrow">›</span>
+          </a>
+          <a class="setting-row" href="#settings">
+            <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+            <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+            <span>收货地址</span>
+            <span class="setting-row__value">2 个地址</span>
+            <span class="setting-row__arrow">›</span>
+          </a>
+          <a class="setting-row" href="#settings">
+            <i class="iconfont icon-search ico-font" aria-hidden="true"></i>
+            <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+            <span>通知设置</span>
+            <span class="setting-row__value">已开启</span>
+            <span class="setting-row__arrow">›</span>
+          </a>
+          <a class="setting-row" href="#settings">
+            <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+            <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+            <span>关于青禾</span>
+            <span class="setting-row__value">v1.0</span>
+            <span class="setting-row__arrow">›</span>
+          </a>
+        </div>
+        <div class="logout">
+          <button class="btn btn--danger" type="button" onclick="alert('演示页面：退出登录仅作示意')">退出登录</button>
+        </div>
+      </div>
+
+      <aside id="benefits">
+        <div class="order-card">
+          <h3 style="font-size:15px">会员权益</h3>
+          <p style="margin-top:8px;font-size:12px;color:var(--muted)">再消费 320 元升级黑金会员，享受免配送费。</p>
+          <div class="progress"><div class="progress__bar" style="width:62%"></div></div>
+          <div class="progress__meta"><span>金卡</span><span>黑金 · 还需 320 元</span></div>
+          <ul class="story__list" style="margin-top:16px">
+            <li>每单 1.5 倍积分</li>
+            <li>每月 2 张 5 元无门槛券</li>
+            <li>环保餐盒双倍抵扣</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__grid">
+    <div>
+      <h4>青禾轻食</h4>
+      <p>低卡不等于寡淡。当日直采、低温慢煮、热量透明，<br>让每一餐都吃得明白。</p>
+    </div>
+    <div>
+      <h4>门店</h4>
+      <p>
+        静安店 · 南京西路 889 号 1F<br>
+        徐汇店 · 漕溪北路 88 号 B1<br>
+        营业时间 10:00 – 21:00
+      </p>
+    </div>
+    <div>
+      <h4>联系</h4>
+      <p>
+        客服电话 400-880-1234<br>
+        邮箱 hello@qinghe.life<br>
+        公众号 青禾轻食
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 青禾轻食 · 高级网页设计 I 实验作品</span>
+    <span>图标方案：字体图标 / SVG 可切换</span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="移动端主导航">
+  <ul>
+    <li><a href="index.html">
+      <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+      <span>首页</span>
+    </a></li>
+    <li><a href="menu.html">
+      <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+      <span>菜单</span>
+    </a></li>
+    <li><a href="order.html">
+      <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+      <span>订单</span>
+      <span class="badge" data-cart-count data-zero="1">0</span>
+    </a></li>
+    <li><a href="user.html" aria-current="page">
+      <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+      <span>我的</span>
+    </a></li>
+  </ul>
+</nav>
+
+</body>
+</html>

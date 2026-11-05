@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>方案 A · 字体图标下导航 | 高级网页设计 I</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/font-nav.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-head">
+    <a class="back" href="index.html">← 返回方案总览</a>
+    <h1>方案 A · 字体图标（iconfont）</h1>
+    <p class="page-sub">
+      下导航的四个图标来自自定义图标字体，通过 <code>@font-face</code> 引入，使用伪元素
+      <code>::before</code> 输出 Unicode 码位。图标本质是「文字」，因此可以直接用
+      <code>font-size</code> 和 <code>color</code> 控制大小与颜色。
+    </p>
+  </header>
+
+  <main class="stage">
+
+    <!-- 手机应用 -->
+    <div class="app">
+      <div class="app__scroll">
+
+        <div class="app-bar">
+          <div class="brand">
+            <span class="brand__logo"><i class="iconfont icon-star" aria-hidden="true"></i></span>
+            <span class="brand__text">
+              <span class="brand__name">青禾轻食</span>
+              <span class="brand__desc">FRESH &amp; LIGHT</span>
+            </span>
+          </div>
+          <button class="icon-btn" type="button" aria-label="搜索">
+            <i class="iconfont icon-search" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="greeting">
+          <p class="greeting__hi">今天想吃点什么？</p>
+          <p class="greeting__sub">低卡轻食 · 现做现送 · 30 分钟达</p>
+        </div>
+
+        <div class="chips">
+          <button class="chip is-active" type="button">全部</button>
+          <button class="chip" type="button">沙拉</button>
+          <button class="chip" type="button">主食</button>
+          <button class="chip" type="button">饮品</button>
+        </div>
+
+        <article class="dish">
+          <div class="dish__media"><img src="assets/img/salad.svg" alt="牛油果鸡胸沙拉"></div>
+          <div class="dish__body">
+            <h2 class="dish__name">牛油果鸡胸沙拉</h2>
+            <p class="dish__desc">低温慢煮鸡胸 · 牛油果 · 混合生菜</p>
+            <div class="dish__meta">
+              <span class="price"><small>¥</small>32</span>
+              <span class="rating"><i class="iconfont icon-star" aria-hidden="true"></i>4.9</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish__media"><img src="assets/img/sandwich.svg" alt="全麦厚蛋三明治"></div>
+          <div class="dish__body">
+            <h2 class="dish__name">全麦厚蛋三明治</h2>
+            <p class="dish__desc">现烤全麦吐司 · 溏心蛋 · 生菜番茄</p>
+            <div class="dish__meta">
+              <span class="price"><small>¥</small>22</span>
+              <span class="rating"><i class="iconfont icon-star" aria-hidden="true"></i>4.8</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish__media"><img src="assets/img/juice.svg" alt="青柠羽衣甘蓝果汁"></div>
+          <div class="dish__body">
+            <h2 class="dish__name">青柠羽衣甘蓝汁</h2>
+            <p class="dish__desc">冷压鲜榨 · 0 添加糖 · 300ml</p>
+            <div class="dish__meta">
+              <span class="price"><small>¥</small>18</span>
+              <span class="rating"><i class="iconfont icon-star" aria-hidden="true"></i>4.7</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- 下导航：字体图标 -->
+      <nav class="tabbar" aria-label="主导航">
+        <ul>
+          <li>
+            <a class="tab is-active" href="#home">
+              <i class="iconfont icon-home" aria-hidden="true"></i>
+              <span class="tab__label">首页</span>
+            </a>
+          </li>
+          <li>
+            <a class="tab" href="#menu">
+              <i class="iconfont icon-menu" aria-hidden="true"></i>
+              <span class="tab__label">菜单</span>
+            </a>
+          </li>
+          <li>
+            <a class="tab" href="#order">
+              <i class="iconfont icon-order" aria-hidden="true"></i>
+              <span class="tab__label">订单</span>
+              <span class="badge">2</span>
+            </a>
+          </li>
+          <li>
+            <a class="tab" href="#user">
+              <i class="iconfont icon-user" aria-hidden="true"></i>
+              <span class="tab__label">我的</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- 说明面板 -->
+    <aside class="spec">
+      <h2>字体的 CSS 修饰</h2>
+      <p>同一套图标字体，只改 CSS 就能得到不同字号与配色，无需准备多套图片。</p>
+
+      <div class="spec__block">
+        <p class="spec__title">字号 / 颜色</p>
+        <div class="spec__icons">
+          <div>
+            <i class="iconfont icon-home size-24" aria-hidden="true"></i>
+            <span class="cap">24px</span>
+          </div>
+          <div>
+            <i class="iconfont icon-home size-32 color-accent" aria-hidden="true"></i>
+            <span class="cap">32px · 橙</span>
+          </div>
+          <div>
+            <i class="iconfont icon-star size-44 color-muted" aria-hidden="true"></i>
+            <span class="cap">44px · 灰</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec__block">
+        <p class="spec__title">实现要点</p>
+        <ul class="tips">
+          <li>字体文件：<b>fonts/lab-icons.ttf</b>，由 6 个 SVG 图标生成。</li>
+          <li>图标类名：<b>.icon-home / .icon-menu / .icon-order / .icon-user</b>。</li>
+          <li>导航项 <b>flex: 1 1 0</b>，四等分宽度，实现自适应。</li>
+          <li>导航固定在页面底部，内容区独立滚动。</li>
+        </ul>
+      </div>
+    </aside>
+
+  </main>
+</div>
+</body>
+</html>

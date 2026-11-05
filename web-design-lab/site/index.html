@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="青禾轻食：低卡轻食点单网站，每日现做、全城 30 分钟送达。">
+<title>青禾轻食 · 吃得轻盈，也吃得满足</title>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="mode-font">
+<script src="assets/js/site.js"></script>
+
+<header class="site-header">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__logo">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+      </span>
+      <span class="brand__text"><b>青禾轻食</b><small>FRESH &amp; LIGHT</small></span>
+    </a>
+    <nav class="header__nav" aria-label="主导航">
+      <a href="index.html" aria-current="page">首页</a>
+      <a href="menu.html">菜单</a>
+      <a href="order.html">订单</a>
+      <a href="user.html">我的</a>
+    </nav>
+    <div class="header__actions">
+      <div class="mode-switch" role="group" aria-label="图标实现方案">
+        <button type="button" data-mode="font">字体图标</button>
+        <button type="button" data-mode="svg">SVG</button>
+      </div>
+      <a class="cart-btn" href="order.html" aria-label="查看订单与购物车">
+        <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        <span class="cart-count" data-cart-count data-zero="1">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="wrap hero">
+    <div class="hero__copy">
+      <span class="eyebrow">每日现做 · 全城 30 分钟达</span>
+      <h1>吃得<em>轻盈</em>，<br>也吃得满足。</h1>
+      <p class="hero__desc">
+        青禾轻食坚持当日直采、低温慢煮与少油少盐的配比。
+        每一份餐都标注热量与蛋白质，让轻食不再是「吃不饱」的代名词。
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="menu.html">立即点单</a>
+        <a class="btn btn--ghost" href="#story">了解青禾</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>12</b><span>城市门店</span></div>
+        <div class="stat"><b>4.9</b><span>平均好评 / 5</span></div>
+        <div class="stat"><b>30<small>min</small></b><span>平均送达</span></div>
+      </div>
+    </div>
+    <div class="hero__art">
+      <div class="hero__plate">
+        <svg viewBox="0 0 200 200" role="img" aria-label="青禾招牌牛油果鸡胸沙拉">
+          <circle cx="100" cy="100" r="92" fill="#ffffff"/>
+          <circle cx="100" cy="100" r="74" fill="#f3f7ec"/>
+          <g fill="#5f9b68">
+            <ellipse cx="70" cy="92" rx="21" ry="12" transform="rotate(-18 70 92)"/>
+            <ellipse cx="128" cy="86" rx="19" ry="11" transform="rotate(14 128 86)"/>
+            <ellipse cx="104" cy="112" rx="22" ry="12" transform="rotate(-8 104 112)"/>
+            <ellipse cx="64" cy="116" rx="17" ry="10" transform="rotate(20 64 116)"/>
+            <ellipse cx="136" cy="116" rx="16" ry="9" transform="rotate(-16 136 116)"/>
+          </g>
+          <g fill="#3f7a4d">
+            <ellipse cx="94" cy="82" rx="13" ry="8" transform="rotate(10 94 82)"/>
+            <ellipse cx="80" cy="106" rx="11" ry="7" transform="rotate(-22 80 106)"/>
+          </g>
+          <g fill="#93b46a">
+            <ellipse cx="96" cy="96" rx="17" ry="10" transform="rotate(-30 96 96)"/>
+            <ellipse cx="96" cy="96" rx="10" ry="6" transform="rotate(-30 96 96)" fill="#c6d79b"/>
+            <ellipse cx="130" cy="102" rx="15" ry="9" transform="rotate(-30 130 102)"/>
+            <ellipse cx="130" cy="102" rx="9" ry="5.4" transform="rotate(-30 130 102)" fill="#c6d79b"/>
+          </g>
+          <g fill="#dfc09a">
+            <rect x="74" y="124" width="34" height="11" rx="5.5" transform="rotate(-8 74 124)"/>
+            <rect x="110" y="128" width="30" height="11" rx="5.5" transform="rotate(6 110 128)"/>
+          </g>
+          <g fill="#d97757">
+            <circle cx="84" cy="110" r="7"/>
+            <circle cx="142" cy="122" r="6"/>
+            <circle cx="118" cy="126" r="6"/>
+          </g>
+        </svg>
+      </div>
+      <span class="hero__badge hero__badge--one">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+        今日好评 98%
+      </span>
+      <span class="hero__badge hero__badge--two">
+        <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+        12 款新品上架
+      </span>
+    </div>
+  </section>
+
+  <!-- 今日推荐 -->
+  <section class="wrap section" aria-labelledby="reco-title">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">TODAY'S PICKS</span>
+        <h2 id="reco-title">今日推荐</h2>
+      </div>
+      <a class="link" href="menu.html">查看全部菜单 →</a>
+    </div>
+
+    <div class="grid">
+      <article class="card dish-card">
+        <div class="dish-card__media">
+          <svg viewBox="0 0 120 120" role="img" aria-label="牛油果鸡胸沙拉">
+            <rect width="120" height="120" fill="#eef3e6"/>
+            <circle cx="96" cy="18" r="26" fill="#e3ecdb"/>
+            <circle cx="14" cy="104" r="18" fill="#e3ecdb"/>
+            <ellipse cx="60" cy="66" rx="42" ry="36" fill="#ffffff"/>
+            <ellipse cx="60" cy="66" rx="35" ry="29" fill="#f3f7ec"/>
+            <g fill="#5f9b68">
+              <ellipse cx="44" cy="52" rx="13" ry="8" transform="rotate(-18 44 52)"/>
+              <ellipse cx="70" cy="48" rx="12" ry="7" transform="rotate(14 70 48)"/>
+              <ellipse cx="62" cy="62" rx="14" ry="8" transform="rotate(-8 62 62)"/>
+              <ellipse cx="40" cy="70" rx="11" ry="7" transform="rotate(20 40 70)"/>
+              <ellipse cx="78" cy="68" rx="10" ry="6" transform="rotate(-16 78 68)"/>
+            </g>
+            <g fill="#93b46a">
+              <ellipse cx="54" cy="56" rx="11" ry="7" transform="rotate(-30 54 56)"/>
+              <ellipse cx="54" cy="56" rx="6.6" ry="4" transform="rotate(-30 54 56)" fill="#c6d79b"/>
+              <ellipse cx="74" cy="58" rx="10" ry="6" transform="rotate(-30 74 58)"/>
+            </g>
+            <g fill="#dfc09a">
+              <rect x="36" y="76" width="22" height="7" rx="3.5" transform="rotate(-8 36 76)"/>
+              <rect x="62" y="78" width="20" height="7" rx="3.5" transform="rotate(6 62 78)"/>
+            </g>
+            <g fill="#d97757">
+              <circle cx="46" cy="66" r="5"/>
+              <circle cx="80" cy="74" r="4"/>
+              <circle cx="66" cy="76" r="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dish-card__body">
+          <div class="dish-card__tags"><span class="tag">低卡</span><span class="tag">高蛋白</span></div>
+          <h3>牛油果鸡胸沙拉</h3>
+          <p class="dish-card__desc">低温慢煮鸡胸 · 牛油果 · 混合生菜 · 油醋汁</p>
+          <div class="dish-card__foot">
+            <span class="price"><small>¥</small>32</span>
+            <button class="btn btn--primary btn--sm" type="button" data-add="牛油果鸡胸沙拉">加入购物车</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card dish-card">
+        <div class="dish-card__media">
+          <svg viewBox="0 0 120 120" role="img" aria-label="全麦厚蛋三明治">
+            <rect width="120" height="120" fill="#f7efe1"/>
+            <circle cx="18" cy="16" r="22" fill="#f1e5d0"/>
+            <circle cx="108" cy="106" r="20" fill="#f1e5d0"/>
+            <ellipse cx="60" cy="92" rx="40" ry="10" fill="#e7dac2"/>
+            <path d="M24 74 L60 42 L96 74 Z" fill="#c99a5b"/>
+            <path d="M30 74 L60 47 L90 74 Z" fill="#e8cfa4"/>
+            <path d="M26 76 L60 46 L94 76 L94 82 L60 52 L26 82 Z" fill="#b6834a"/>
+            <path d="M28 78 Q60 66 92 78 Q60 90 28 78 Z" fill="#5f9b68"/>
+            <path d="M30 82 Q60 72 90 82 L90 88 Q60 96 30 88 Z" fill="#7fb56f"/>
+            <ellipse cx="60" cy="84" rx="22" ry="9" fill="#f4c95d"/>
+            <ellipse cx="60" cy="84" rx="13" ry="5.5" fill="#f7dd94"/>
+            <path d="M30 88 Q60 96 90 88 L90 92 Q60 100 30 92 Z" fill="#c99a5b"/>
+            <g fill="#e06f4e">
+              <circle cx="44" cy="90" r="3.4"/>
+              <circle cx="56" cy="93" r="3"/>
+              <circle cx="72" cy="92" r="3.2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dish-card__body">
+          <div class="dish-card__tags"><span class="tag">现烤</span><span class="tag tag--warm">热销</span></div>
+          <h3>全麦厚蛋三明治</h3>
+          <p class="dish-card__desc">全麦吐司 · 溏心蛋 · 生菜番茄 · 轻脂沙拉酱</p>
+          <div class="dish-card__foot">
+            <span class="price"><small>¥</small>22</span>
+            <button class="btn btn--primary btn--sm" type="button" data-add="全麦厚蛋三明治">加入购物车</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card dish-card">
+        <div class="dish-card__media">
+          <svg viewBox="0 0 120 120" role="img" aria-label="青柠羽衣甘蓝汁">
+            <rect width="120" height="120" fill="#eef4e8"/>
+            <circle cx="100" cy="22" r="24" fill="#e2ecd8"/>
+            <circle cx="18" cy="100" r="20" fill="#e2ecd8"/>
+            <ellipse cx="60" cy="100" rx="26" ry="7" fill="#dfe8d5"/>
+            <rect x="42" y="26" width="36" height="72" rx="14" fill="#e8f0e2"/>
+            <rect x="44" y="46" width="32" height="50" rx="11" fill="#8fbf6f"/>
+            <rect x="44" y="62" width="32" height="34" rx="11" fill="#6ea85a"/>
+            <rect x="46" y="78" width="28" height="16" rx="4" fill="#ffffff" opacity="0.9"/>
+            <rect x="50" y="84" width="20" height="3" rx="1.5" fill="#6ea85a"/>
+            <rect x="56" y="90" width="14" height="2.4" rx="1.2" fill="#c7d8b8"/>
+            <rect x="49" y="14" width="22" height="14" rx="5" fill="#3f7a4d"/>
+            <rect x="55" y="8" width="10" height="8" rx="3" fill="#2f6b4f"/>
+            <rect x="66" y="16" width="6" height="34" rx="3" transform="rotate(14 66 16)" fill="#d98e3f"/>
+            <g fill="#cfe0be" opacity="0.85">
+              <circle cx="52" cy="56" r="2.2"/>
+              <circle cx="64" cy="52" r="1.8"/>
+              <circle cx="70" cy="68" r="2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dish-card__body">
+          <div class="dish-card__tags"><span class="tag">0 添加糖</span><span class="tag">冷压</span></div>
+          <h3>青柠羽衣甘蓝汁</h3>
+          <p class="dish-card__desc">羽衣甘蓝 · 青柠 · 苹果 · 冷压鲜榨 300ml</p>
+          <div class="dish-card__foot">
+            <span class="price"><small>¥</small>18</span>
+            <button class="btn btn--primary btn--sm" type="button" data-add="青柠羽衣甘蓝汁">加入购物车</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 特色 -->
+  <section class="wrap section section--tight" aria-labelledby="feat-title">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">WHY QINGHE</span>
+        <h2 id="feat-title">为什么选择青禾</h2>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <span class="feature__icon">
+          <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+          <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+        </span>
+        <h3>当日直采</h3>
+        <p>蔬菜与水果清晨到店，当日未用完的食材全部处理，不隔夜、不速冻。</p>
+      </div>
+      <div class="feature">
+        <span class="feature__icon">
+          <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+          <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+        </span>
+        <h3>低温慢煮</h3>
+        <p>鸡胸、牛肉采用 65℃ 低温慢煮，锁住水分，少油少盐也能有好口感。</p>
+      </div>
+      <div class="feature">
+        <span class="feature__icon">
+          <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+          <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        </span>
+        <h3>30 分钟达</h3>
+        <p>门店 3 公里内专送，保温箱分温区存放，沙拉与热食互不影响。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 品牌故事 -->
+  <section class="wrap section" id="story" aria-labelledby="story-title">
+    <div class="story">
+      <div class="story__art">
+        <svg viewBox="0 0 120 120" role="img" aria-label="青禾门店厨房插画">
+          <rect width="120" height="120" fill="#e7f0e0"/>
+          <circle cx="20" cy="20" r="24" fill="#dcead2"/>
+          <circle cx="104" cy="104" r="22" fill="#dcead2"/>
+          <rect x="22" y="62" width="76" height="8" rx="4" fill="#c9b28c"/>
+          <rect x="28" y="70" width="6" height="34" fill="#b59c74"/>
+          <rect x="86" y="70" width="6" height="34" fill="#b59c74"/>
+          <ellipse cx="44" cy="56" rx="16" ry="7" fill="#ffffff"/>
+          <ellipse cx="44" cy="54" rx="12" ry="5" fill="#f3f7ec"/>
+          <g fill="#5f9b68">
+            <ellipse cx="38" cy="52" rx="6" ry="3.6" transform="rotate(-18 38 52)"/>
+            <ellipse cx="50" cy="52" rx="5.4" ry="3.4" transform="rotate(16 50 52)"/>
+          </g>
+          <circle cx="44" cy="50" r="2.6" fill="#d97757"/>
+          <path d="M74 44 L86 44 L84 58 L76 58 Z" fill="#8fbf6f"/>
+          <rect x="72" y="34" width="16" height="8" rx="3" fill="#e8f0e2"/>
+          <rect x="30" y="26" width="10" height="30" rx="4" fill="#d98e3f" opacity="0.8"/>
+          <rect x="44" y="22" width="8" height="34" rx="4" fill="#2f6b4f" opacity="0.55"/>
+        </svg>
+      </div>
+      <div>
+        <span class="eyebrow">OUR STORY</span>
+        <h2 id="story-title">从一间 12 ㎡ 的小厨房开始</h2>
+        <p>
+          2019 年，三个不爱吃草的朋友决定做一件小事：让轻食真正好吃。
+          我们跑遍本地农场确定供应，反复调整油醋汁配比，把每一份餐的热量写在菜单上。
+          七年过去，青禾从一间小厨房长成了 12 家门店，但配比表还在每天手写更新。
+        </p>
+        <ul class="story__list">
+          <li>每份餐标注热量、蛋白质与膳食纤维</li>
+          <li>可循环餐盒，回收可抵 2 元</li>
+          <li>每周三上新，季节限定只做 4 周</li>
+        </ul>
+        <a class="btn btn--ghost" href="menu.html" style="margin-top:20px">看看本周菜单</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__grid">
+    <div>
+      <h4>青禾轻食</h4>
+      <p>低卡不等于寡淡。当日直采、低温慢煮、热量透明，<br>让每一餐都吃得明白。</p>
+    </div>
+    <div>
+      <h4>门店</h4>
+      <p>
+        静安店 · 南京西路 889 号 1F<br>
+        徐汇店 · 漕溪北路 88 号 B1<br>
+        营业时间 10:00 – 21:00
+      </p>
+    </div>
+    <div>
+      <h4>联系</h4>
+      <p>
+        客服电话 400-880-1234<br>
+        邮箱 hello@qinghe.life<br>
+        公众号 青禾轻食
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 青禾轻食 · 高级网页设计 I 实验作品</span>
+    <span>图标方案：字体图标 / SVG 可切换</span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="移动端主导航">
+  <ul>
+    <li><a href="index.html" aria-current="page">
+      <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+      <span>首页</span>
+    </a></li>
+    <li><a href="menu.html">
+      <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+      <span>菜单</span>
+    </a></li>
+    <li><a href="order.html">
+      <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+      <span>订单</span>
+      <span class="badge" data-cart-count data-zero="1">0</span>
+    </a></li>
+    <li><a href="user.html">
+      <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+      <span>我的</span>
+    </a></li>
+  </ul>
+</nav>
+
+</body>
+</html>

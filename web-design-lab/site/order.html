@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="青禾轻食订单：查看配送进度与历史订单。">
+<title>订单 · 青禾轻食</title>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="mode-font">
+<script src="assets/js/site.js"></script>
+
+<header class="site-header">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__logo">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+      </span>
+      <span class="brand__text"><b>青禾轻食</b><small>FRESH &amp; LIGHT</small></span>
+    </a>
+    <nav class="header__nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="menu.html">菜单</a>
+      <a href="order.html" aria-current="page">订单</a>
+      <a href="user.html">我的</a>
+    </nav>
+    <div class="header__actions">
+      <div class="mode-switch" role="group" aria-label="图标实现方案">
+        <button type="button" data-mode="font">字体图标</button>
+        <button type="button" data-mode="svg">SVG</button>
+      </div>
+      <a class="cart-btn" href="order.html" aria-label="查看订单与购物车">
+        <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        <span class="cart-count" data-cart-count data-zero="1">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="page-hero">
+    <span class="eyebrow">MY ORDERS</span>
+    <h1>我的订单</h1>
+    <p>查看配送进度、历史订单，也可以一键再来一单。</p>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="current-title">
+    <div class="section-head">
+      <div>
+        <h2 id="current-title">进行中</h2>
+      </div>
+      <span class="order-status">配送中 · 预计 12 分钟后送达</span>
+    </div>
+
+    <div class="order-card">
+      <div class="order-head">
+        <div>
+          <h3>订单 #QH20261105001</h3>
+          <p class="order-no">2026-11-05 12:08 下单 · 静安店配送</p>
+        </div>
+        <span class="order-status">¥50.00</span>
+      </div>
+
+      <div class="track" role="list" aria-label="配送进度">
+        <div class="track__step is-done" role="listitem">
+          <div class="track__dot">1</div>
+          <div class="track__label">已下单</div>
+        </div>
+        <div class="track__step is-done" role="listitem">
+          <div class="track__dot">2</div>
+          <div class="track__label">备餐完成</div>
+        </div>
+        <div class="track__step is-current" role="listitem">
+          <div class="track__dot">3</div>
+          <div class="track__label">配送中</div>
+        </div>
+        <div class="track__step" role="listitem">
+          <div class="track__dot">4</div>
+          <div class="track__label">已送达</div>
+        </div>
+      </div>
+
+      <div class="order-items">
+        <div class="order-item">
+          <div class="order-item__thumb">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <rect width="120" height="120" fill="#eef3e6"/>
+              <ellipse cx="60" cy="66" rx="42" ry="36" fill="#ffffff"/>
+              <ellipse cx="60" cy="66" rx="35" ry="29" fill="#f3f7ec"/>
+              <g fill="#5f9b68">
+                <ellipse cx="44" cy="52" rx="13" ry="8" transform="rotate(-18 44 52)"/>
+                <ellipse cx="70" cy="48" rx="12" ry="7" transform="rotate(14 70 48)"/>
+                <ellipse cx="62" cy="62" rx="14" ry="8" transform="rotate(-8 62 62)"/>
+              </g>
+              <g fill="#93b46a">
+                <ellipse cx="54" cy="56" rx="11" ry="7" transform="rotate(-30 54 56)"/>
+                <ellipse cx="74" cy="58" rx="10" ry="6" transform="rotate(-30 74 58)"/>
+              </g>
+              <g fill="#dfc09a">
+                <rect x="36" y="76" width="22" height="7" rx="3.5" transform="rotate(-8 36 76)"/>
+              </g>
+              <g fill="#d97757">
+                <circle cx="46" cy="66" r="5"/>
+                <circle cx="80" cy="74" r="4"/>
+              </g>
+            </svg>
+          </div>
+          <div class="order-item__info">
+            <b>牛油果鸡胸沙拉</b>
+            <span>低卡 · 高蛋白 × 1</span>
+          </div>
+          <span class="order-item__price">¥32</span>
+        </div>
+
+        <div class="order-item">
+          <div class="order-item__thumb">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <rect width="120" height="120" fill="#eef4e8"/>
+              <ellipse cx="60" cy="100" rx="26" ry="7" fill="#dfe8d5"/>
+              <rect x="42" y="26" width="36" height="72" rx="14" fill="#e8f0e2"/>
+              <rect x="44" y="46" width="32" height="50" rx="11" fill="#8fbf6f"/>
+              <rect x="44" y="62" width="32" height="34" rx="11" fill="#6ea85a"/>
+              <rect x="46" y="78" width="28" height="16" rx="4" fill="#ffffff" opacity="0.9"/>
+              <rect x="49" y="14" width="22" height="14" rx="5" fill="#3f7a4d"/>
+              <rect x="66" y="16" width="6" height="34" rx="3" transform="rotate(14 66 16)" fill="#d98e3f"/>
+            </svg>
+          </div>
+          <div class="order-item__info">
+            <b>青柠羽衣甘蓝汁</b>
+            <span>0 添加糖 · 冷压 × 1</span>
+          </div>
+          <span class="order-item__price">¥18</span>
+        </div>
+      </div>
+
+      <div class="order-foot">
+        <span class="order-total">合计 <b>¥50.00</b></span>
+        <div>
+          <a class="btn btn--ghost btn--sm" href="user.html">联系客服</a>
+          <a class="btn btn--primary btn--sm" href="menu.html">再来一单</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="history-title">
+    <div class="section-head">
+      <div>
+        <h2 id="history-title">历史订单</h2>
+      </div>
+      <span class="order-no">近 30 天 · 共 4 单</span>
+    </div>
+
+    <div class="order-card">
+      <div class="order-head">
+        <div>
+          <h3>订单 #QH20261103018</h3>
+          <p class="order-no">2026-11-03 18:42 · 静安店</p>
+        </div>
+        <span class="order-status order-status--muted">已送达</span>
+      </div>
+      <div class="order-items" style="margin-top:16px">
+        <div class="order-item">
+          <div class="order-item__info">
+            <b>全麦厚蛋三明治 × 1 · 南瓜浓汤 × 1</b>
+            <span>实付 ¥38.00 · 使用 5 元优惠券</span>
+          </div>
+          <span class="order-item__price">¥38</span>
+        </div>
+      </div>
+      <div class="order-foot">
+        <span class="order-total">已评价 4.9 分</span>
+        <div>
+          <a class="btn btn--ghost btn--sm" href="menu.html">再来一单</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-head">
+        <div>
+          <h3>订单 #QH20261031009</h3>
+          <p class="order-no">2026-10-31 12:20 · 徐汇店</p>
+        </div>
+        <span class="order-status order-status--muted">已送达</span>
+      </div>
+      <div class="order-items" style="margin-top:16px">
+        <div class="order-item">
+          <div class="order-item__info">
+            <b>糙米鸡胸能量碗 × 1 · 莓果希腊酸奶杯 × 1</b>
+            <span>实付 ¥56.00 · 环保餐盒回收抵扣 2 元</span>
+          </div>
+          <span class="order-item__price">¥56</span>
+        </div>
+      </div>
+      <div class="order-foot">
+        <span class="order-total">已评价 4.8 分</span>
+        <div>
+          <a class="btn btn--ghost btn--sm" href="menu.html">再来一单</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="empty-tip">订单仅保留最近 30 天记录，更早的订单请联系客服查询。</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__grid">
+    <div>
+      <h4>青禾轻食</h4>
+      <p>低卡不等于寡淡。当日直采、低温慢煮、热量透明，<br>让每一餐都吃得明白。</p>
+    </div>
+    <div>
+      <h4>门店</h4>
+      <p>
+        静安店 · 南京西路 889 号 1F<br>
+        徐汇店 · 漕溪北路 88 号 B1<br>
+        营业时间 10:00 – 21:00
+      </p>
+    </div>
+    <div>
+      <h4>联系</h4>
+      <p>
+        客服电话 400-880-1234<br>
+        邮箱 hello@qinghe.life<br>
+        公众号 青禾轻食
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 青禾轻食 · 高级网页设计 I 实验作品</span>
+    <span>图标方案：字体图标 / SVG 可切换</span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="移动端主导航">
+  <ul>
+    <li><a href="index.html">
+      <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+      <span>首页</span>
+    </a></li>
+    <li><a href="menu.html">
+      <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+      <span>菜单</span>
+    </a></li>
+    <li><a href="order.html" aria-current="page">
+      <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+      <span>订单</span>
+      <span class="badge" data-cart-count data-zero="1">0</span>
+    </a></li>
+    <li><a href="user.html">
+      <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+      <span>我的</span>
+    </a></li>
+  </ul>
+</nav>
+
+</body>
+</html>

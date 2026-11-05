@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="青禾轻食菜单：沙拉、主食、饮品与甜点，全部标注热量与蛋白质。">
+<title>菜单 · 青禾轻食</title>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="mode-font">
+<script src="assets/js/site.js"></script>
+
+<header class="site-header">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__logo">
+        <i class="iconfont icon-star ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+      </span>
+      <span class="brand__text"><b>青禾轻食</b><small>FRESH &amp; LIGHT</small></span>
+    </a>
+    <nav class="header__nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="menu.html" aria-current="page">菜单</a>
+      <a href="order.html">订单</a>
+      <a href="user.html">我的</a>
+    </nav>
+    <div class="header__actions">
+      <div class="mode-switch" role="group" aria-label="图标实现方案">
+        <button type="button" data-mode="font">字体图标</button>
+        <button type="button" data-mode="svg">SVG</button>
+      </div>
+      <a class="cart-btn" href="order.html" aria-label="查看订单与购物车">
+        <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+        <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+        <span class="cart-count" data-cart-count data-zero="1">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="page-hero">
+    <span class="eyebrow">本周菜单 · 第 42 周</span>
+    <h1>轻食菜单</h1>
+    <p>六款常驻餐品，全部当日现做。每份餐都标注热量与蛋白质，点单前可以先算一算。</p>
+  </section>
+
+  <div class="filters" role="group" aria-label="菜单分类">
+    <button class="filter is-active" type="button" data-filter="all">全部</button>
+    <button class="filter" type="button" data-filter="salad">沙拉</button>
+    <button class="filter" type="button" data-filter="main">主食</button>
+    <button class="filter" type="button" data-filter="drink">饮品</button>
+    <button class="filter" type="button" data-filter="dessert">甜点</button>
+  </div>
+
+  <section class="grid" aria-label="菜品列表">
+
+    <article class="card dish-card" data-cat="salad">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="牛油果鸡胸沙拉">
+          <rect width="120" height="120" fill="#eef3e6"/>
+          <circle cx="96" cy="18" r="26" fill="#e3ecdb"/>
+          <circle cx="14" cy="104" r="18" fill="#e3ecdb"/>
+          <ellipse cx="60" cy="66" rx="42" ry="36" fill="#ffffff"/>
+          <ellipse cx="60" cy="66" rx="35" ry="29" fill="#f3f7ec"/>
+          <g fill="#5f9b68">
+            <ellipse cx="44" cy="52" rx="13" ry="8" transform="rotate(-18 44 52)"/>
+            <ellipse cx="70" cy="48" rx="12" ry="7" transform="rotate(14 70 48)"/>
+            <ellipse cx="62" cy="62" rx="14" ry="8" transform="rotate(-8 62 62)"/>
+            <ellipse cx="40" cy="70" rx="11" ry="7" transform="rotate(20 40 70)"/>
+            <ellipse cx="78" cy="68" rx="10" ry="6" transform="rotate(-16 78 68)"/>
+          </g>
+          <g fill="#93b46a">
+            <ellipse cx="54" cy="56" rx="11" ry="7" transform="rotate(-30 54 56)"/>
+            <ellipse cx="54" cy="56" rx="6.6" ry="4" transform="rotate(-30 54 56)" fill="#c6d79b"/>
+            <ellipse cx="74" cy="58" rx="10" ry="6" transform="rotate(-30 74 58)"/>
+          </g>
+          <g fill="#dfc09a">
+            <rect x="36" y="76" width="22" height="7" rx="3.5" transform="rotate(-8 36 76)"/>
+            <rect x="62" y="78" width="20" height="7" rx="3.5" transform="rotate(6 62 78)"/>
+          </g>
+          <g fill="#d97757">
+            <circle cx="46" cy="66" r="5"/>
+            <circle cx="80" cy="74" r="4"/>
+            <circle cx="66" cy="76" r="4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag">低卡</span><span class="tag">高蛋白</span></div>
+        <h3>牛油果鸡胸沙拉</h3>
+        <p class="dish-card__desc">低温慢煮鸡胸 · 牛油果 · 混合生菜 · 油醋汁</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>32</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="牛油果鸡胸沙拉">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card dish-card" data-cat="main">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="全麦厚蛋三明治">
+          <rect width="120" height="120" fill="#f7efe1"/>
+          <circle cx="18" cy="16" r="22" fill="#f1e5d0"/>
+          <circle cx="108" cy="106" r="20" fill="#f1e5d0"/>
+          <ellipse cx="60" cy="92" rx="40" ry="10" fill="#e7dac2"/>
+          <path d="M24 74 L60 42 L96 74 Z" fill="#c99a5b"/>
+          <path d="M30 74 L60 47 L90 74 Z" fill="#e8cfa4"/>
+          <path d="M26 76 L60 46 L94 76 L94 82 L60 52 L26 82 Z" fill="#b6834a"/>
+          <path d="M28 78 Q60 66 92 78 Q60 90 28 78 Z" fill="#5f9b68"/>
+          <path d="M30 82 Q60 72 90 82 L90 88 Q60 96 30 88 Z" fill="#7fb56f"/>
+          <ellipse cx="60" cy="84" rx="22" ry="9" fill="#f4c95d"/>
+          <ellipse cx="60" cy="84" rx="13" ry="5.5" fill="#f7dd94"/>
+          <path d="M30 88 Q60 96 90 88 L90 92 Q60 100 30 92 Z" fill="#c99a5b"/>
+          <g fill="#e06f4e">
+            <circle cx="44" cy="90" r="3.4"/>
+            <circle cx="56" cy="93" r="3"/>
+            <circle cx="72" cy="92" r="3.2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag">现烤</span><span class="tag tag--warm">热销</span></div>
+        <h3>全麦厚蛋三明治</h3>
+        <p class="dish-card__desc">全麦吐司 · 溏心蛋 · 生菜番茄 · 轻脂沙拉酱</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>22</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="全麦厚蛋三明治">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card dish-card" data-cat="drink">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="青柠羽衣甘蓝汁">
+          <rect width="120" height="120" fill="#eef4e8"/>
+          <circle cx="100" cy="22" r="24" fill="#e2ecd8"/>
+          <circle cx="18" cy="100" r="20" fill="#e2ecd8"/>
+          <ellipse cx="60" cy="100" rx="26" ry="7" fill="#dfe8d5"/>
+          <rect x="42" y="26" width="36" height="72" rx="14" fill="#e8f0e2"/>
+          <rect x="44" y="46" width="32" height="50" rx="11" fill="#8fbf6f"/>
+          <rect x="44" y="62" width="32" height="34" rx="11" fill="#6ea85a"/>
+          <rect x="46" y="78" width="28" height="16" rx="4" fill="#ffffff" opacity="0.9"/>
+          <rect x="50" y="84" width="20" height="3" rx="1.5" fill="#6ea85a"/>
+          <rect x="56" y="90" width="14" height="2.4" rx="1.2" fill="#c7d8b8"/>
+          <rect x="49" y="14" width="22" height="14" rx="5" fill="#3f7a4d"/>
+          <rect x="55" y="8" width="10" height="8" rx="3" fill="#2f6b4f"/>
+          <rect x="66" y="16" width="6" height="34" rx="3" transform="rotate(14 66 16)" fill="#d98e3f"/>
+          <g fill="#cfe0be" opacity="0.85">
+            <circle cx="52" cy="56" r="2.2"/>
+            <circle cx="64" cy="52" r="1.8"/>
+            <circle cx="70" cy="68" r="2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag">0 添加糖</span><span class="tag">冷压</span></div>
+        <h3>青柠羽衣甘蓝汁</h3>
+        <p class="dish-card__desc">羽衣甘蓝 · 青柠 · 苹果 · 冷压鲜榨 300ml</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>18</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="青柠羽衣甘蓝汁">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card dish-card" data-cat="main">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="糙米鸡胸能量碗">
+          <rect width="120" height="120" fill="#f6efe3"/>
+          <circle cx="18" cy="20" r="22" fill="#efe6d6"/>
+          <circle cx="104" cy="102" r="20" fill="#efe6d6"/>
+          <ellipse cx="60" cy="94" rx="40" ry="9" fill="#e6dccb"/>
+          <ellipse cx="60" cy="66" rx="42" ry="27" fill="#ffffff"/>
+          <ellipse cx="60" cy="68" rx="36" ry="22" fill="#f0d9a8"/>
+          <g fill="#7fb56f">
+            <ellipse cx="38" cy="58" rx="12" ry="7" transform="rotate(-20 38 58)"/>
+            <ellipse cx="82" cy="56" rx="11" ry="7" transform="rotate(18 82 56)"/>
+            <ellipse cx="60" cy="52" rx="13" ry="7" transform="rotate(-4 60 52)"/>
+          </g>
+          <g fill="#dfc09a">
+            <rect x="34" y="72" width="18" height="10" rx="4" transform="rotate(-6 34 72)"/>
+            <rect x="64" y="76" width="18" height="10" rx="4" transform="rotate(8 64 76)"/>
+          </g>
+          <g fill="#93b46a">
+            <circle cx="70" cy="64" r="5.5"/>
+            <circle cx="70" cy="64" r="3" fill="#c6d79b"/>
+            <circle cx="46" cy="64" r="5"/>
+            <circle cx="46" cy="64" r="2.6" fill="#c6d79b"/>
+          </g>
+          <g fill="#e8c35c">
+            <circle cx="50" cy="60" r="2.6"/>
+            <circle cx="58" cy="56" r="2.2"/>
+            <circle cx="88" cy="62" r="2.4"/>
+          </g>
+          <g fill="#d97757">
+            <circle cx="48" cy="78" r="4"/>
+            <circle cx="86" cy="70" r="4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag">高饱腹</span><span class="tag tag--warm">主食</span></div>
+        <h3>糙米鸡胸能量碗</h3>
+        <p class="dish-card__desc">三色糙米 · 香煎鸡胸 · 玉米 · 时蔬 · 芝麻酱</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>36</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="糙米鸡胸能量碗">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card dish-card" data-cat="dessert">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="莓果希腊酸奶杯">
+          <rect width="120" height="120" fill="#f7eef0"/>
+          <circle cx="98" cy="22" r="24" fill="#f2e3e8"/>
+          <circle cx="18" cy="102" r="18" fill="#f2e3e8"/>
+          <ellipse cx="60" cy="100" rx="30" ry="7" fill="#eddde2"/>
+          <rect x="40" y="30" width="40" height="72" rx="16" fill="#ffffff"/>
+          <ellipse cx="60" cy="34" rx="18" ry="6" fill="#e9e4da"/>
+          <rect x="43" y="36" width="34" height="62" rx="13" fill="#f1e7d9"/>
+          <rect x="43" y="72" width="34" height="26" rx="12" fill="#e2cdb8"/>
+          <g fill="#8e5a7a">
+            <circle cx="52" cy="78" r="5"/>
+            <circle cx="62" cy="74" r="4.2"/>
+            <circle cx="72" cy="80" r="5"/>
+            <circle cx="58" cy="88" r="3.6"/>
+            <circle cx="68" cy="88" r="3"/>
+          </g>
+          <g fill="#b0718f">
+            <circle cx="48" cy="86" r="3"/>
+            <circle cx="76" cy="88" r="2.6"/>
+          </g>
+          <g fill="#c99a5b">
+            <circle cx="50" cy="94" r="2"/>
+            <circle cx="60" cy="96" r="2"/>
+            <circle cx="70" cy="94" r="2"/>
+          </g>
+          <g fill="#5f9b68">
+            <ellipse cx="70" cy="44" rx="7" ry="4" transform="rotate(-24 70 44)"/>
+            <ellipse cx="70" cy="44" rx="4" ry="2.4" transform="rotate(-24 70 44)" fill="#7fb56f"/>
+          </g>
+          <g fill="#8e5a7a">
+            <circle cx="52" cy="46" r="3.6"/>
+            <circle cx="62" cy="42" r="3"/>
+            <circle cx="74" cy="50" r="3.2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag">低糖</span><span class="tag">高蛋白</span></div>
+        <h3>莓果希腊酸奶杯</h3>
+        <p class="dish-card__desc">希腊酸奶 · 蓝莓 · 树莓 · 无糖燕麦脆</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>20</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="莓果希腊酸奶杯">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card dish-card" data-cat="main">
+      <div class="dish-card__media">
+        <svg viewBox="0 0 120 120" role="img" aria-label="南瓜浓汤">
+          <rect width="120" height="120" fill="#fbf1e2"/>
+          <circle cx="20" cy="20" r="26" fill="#f6e8d2"/>
+          <circle cx="104" cy="100" r="20" fill="#f6e8d2"/>
+          <ellipse cx="60" cy="96" rx="38" ry="8" fill="#e8dcc8"/>
+          <ellipse cx="60" cy="64" rx="42" ry="26" fill="#ffffff"/>
+          <ellipse cx="60" cy="64" rx="35" ry="20" fill="#e2a24e"/>
+          <path d="M42 64 Q52 54 62 62 Q72 70 80 62" fill="none" stroke="#f6d9a8" stroke-width="4" stroke-linecap="round"/>
+          <g fill="#6b8a4f">
+            <ellipse cx="52" cy="60" rx="3.4" ry="2.4" transform="rotate(-24 52 60)"/>
+            <ellipse cx="68" cy="70" rx="3.2" ry="2.2" transform="rotate(18 68 70)"/>
+            <ellipse cx="62" cy="54" rx="2.8" ry="2" transform="rotate(-8 62 54)"/>
+          </g>
+          <g fill="#7fb56f">
+            <circle cx="46" cy="70" r="2.6"/>
+            <circle cx="74" cy="56" r="2.2"/>
+          </g>
+          <circle cx="58" cy="66" r="3" fill="#f6d9a8"/>
+        </svg>
+      </div>
+      <div class="dish-card__body">
+        <div class="dish-card__tags"><span class="tag tag--warm">暖胃</span><span class="tag">低脂</span></div>
+        <h3>南瓜浓汤</h3>
+        <p class="dish-card__desc">贝贝南瓜 · 淡奶油 · 南瓜籽 · 现磨黑胡椒</p>
+        <div class="dish-card__foot">
+          <span class="price"><small>¥</small>16</span>
+          <button class="btn btn--primary btn--sm" type="button" data-add="南瓜浓汤">加入购物车</button>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="nutrition" aria-label="营养说明">
+    <div class="nutrition__item">
+      <span class="nutrition__num">12</span>
+      <span>款常驻餐品<br>全部标注热量</span>
+    </div>
+    <div class="nutrition__item">
+      <span class="nutrition__num">450</span>
+      <span>kcal 上限<br>单份主食不超过</span>
+    </div>
+    <div class="nutrition__item">
+      <span class="nutrition__num">25g</span>
+      <span>平均蛋白质<br>每份沙拉含量</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__grid">
+    <div>
+      <h4>青禾轻食</h4>
+      <p>低卡不等于寡淡。当日直采、低温慢煮、热量透明，<br>让每一餐都吃得明白。</p>
+    </div>
+    <div>
+      <h4>门店</h4>
+      <p>
+        静安店 · 南京西路 889 号 1F<br>
+        徐汇店 · 漕溪北路 88 号 B1<br>
+        营业时间 10:00 – 21:00
+      </p>
+    </div>
+    <div>
+      <h4>联系</h4>
+      <p>
+        客服电话 400-880-1234<br>
+        邮箱 hello@qinghe.life<br>
+        公众号 青禾轻食
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 青禾轻食 · 高级网页设计 I 实验作品</span>
+    <span>图标方案：字体图标 / SVG 可切换</span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="移动端主导航">
+  <ul>
+    <li><a href="index.html">
+      <i class="iconfont icon-home ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg>
+      <span>首页</span>
+    </a></li>
+    <li><a href="menu.html" aria-current="page">
+      <i class="iconfont icon-menu ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+      <span>菜单</span>
+    </a></li>
+    <li><a href="order.html">
+      <i class="iconfont icon-order ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-order"></use></svg>
+      <span>订单</span>
+      <span class="badge" data-cart-count data-zero="1">0</span>
+    </a></li>
+    <li><a href="user.html">
+      <i class="iconfont icon-user ico-font" aria-hidden="true"></i>
+      <svg class="svg-icon ico-svg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>
+      <span>我的</span>
+    </a></li>
+  </ul>
+</nav>
+
+</body>
+</html>

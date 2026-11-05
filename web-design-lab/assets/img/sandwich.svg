@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="全麦厚蛋三明治插画">
+  <rect width="120" height="120" fill="#f7efe1"/>
+  <circle cx="18" cy="16" r="22" fill="#f1e5d0"/>
+  <circle cx="108" cy="106" r="20" fill="#f1e5d0"/>
+
+  <ellipse cx="60" cy="92" rx="40" ry="10" fill="#e7dac2"/>
+
+  <path d="M24 74 L60 42 L96 74 Z" fill="#c99a5b"/>
+  <path d="M30 74 L60 47 L90 74 Z" fill="#e8cfa4"/>
+
+  <path d="M26 76 L60 46 L94 76 L94 82 L60 52 L26 82 Z" fill="#b6834a"/>
+
+  <path d="M28 78 Q60 66 92 78 Q60 90 28 78 Z" fill="#5f9b68"/>
+  <path d="M30 82 Q60 72 90 82 L90 88 Q60 96 30 88 Z" fill="#7fb56f"/>
+
+  <ellipse cx="60" cy="84" rx="22" ry="9" fill="#f4c95d"/>
+  <ellipse cx="60" cy="84" rx="13" ry="5.5" fill="#f7dd94"/>
+
+  <path d="M30 88 Q60 96 90 88 L90 92 Q60 100 30 92 Z" fill="#c99a5b"/>
+  <g fill="#e06f4e">
+    <circle cx="44" cy="90" r="3.4"/>
+    <circle cx="56" cy="93" r="3"/>
+    <circle cx="72" cy="92" r="3.2"/>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+/* ===== 方案 B：SVG 图标（symbol 雪碧图 + <use>） ===== */
+
+.svg-icon {
+  display: inline-block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  color: inherit;
+  fill: currentColor;
+  vertical-align: middle;
+}
+
+.brand__logo .svg-icon { width: 19px; height: 19px; }
+.icon-btn .svg-icon    { width: 20px; height: 20px; }
+.rating .svg-icon      { width: 12px; height: 12px; }
+
+/* 下导航：图标尺寸用 CSS 变量控制，可随视口缩放 */
+.tab .svg-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.25s, color 0.25s;
+}
+
+.tab.is-active .svg-icon {
+  width: 26px;
+  height: 26px;
+  transform: translateY(-2px);
+}
+
+.tab.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 2px 8px;
+  z-index: 0;
+  border-radius: 12px;
+  background: var(--brand-soft);
+}
+
+.tab .svg-icon,
+.tab .tab__label,
+.tab .badge {
+  position: relative;
+  z-index: 1;
+}
+
+.tab.is-active .tab__label {
+  font-weight: 700;
+}
+
+.tab:active .svg-icon {
+  transform: scale(0.86);
+}
+
+/* 右侧演示区：SVG 同样可以用 CSS 改尺寸与颜色 */
+.spec__icons .svg-icon {
+  color: var(--brand);
+}
+.spec__icons .size-24 .svg-icon { width: 24px; height: 24px; }
+.spec__icons .size-32 .svg-icon { width: 32px; height: 32px; }
+.spec__icons .size-44 .svg-icon { width: 44px; height: 44px; }
+.spec__icons .color-accent .svg-icon { color: var(--accent); }
+.spec__icons .color-muted .svg-icon { color: var(--muted); }
